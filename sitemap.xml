@@ -3,20 +3,42 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://mcleary.github.io/</loc>
+    <lastmod>2020-12-29T15:38:44+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mcleary.github.io/posts/my-first-post/</loc>
+    <lastmod>2020-12-29T15:38:44+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mcleary.github.io/posts/</loc>
+    <lastmod>2020-12-29T15:38:44+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mcleary.github.io/tags/tag1/</loc>
+    <lastmod>2020-12-29T15:38:44+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mcleary.github.io/tags/tag2/</loc>
+    <lastmod>2020-12-29T15:38:44+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://mcleary.github.io/tags/</loc>
+    <lastmod>2020-12-29T15:38:44+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://mcleary.github.io/about/</loc>
     <lastmod>2020-04-11T19:15:32+08:00</lastmod>
   </url>
   
   <url>
-    <loc>https://mcleary.github.io/</loc>
-  </url>
-  
-  <url>
     <loc>https://mcleary.github.io/search/</loc>
-  </url>
-  
-  <url>
-    <loc>https://mcleary.github.io/tags/</loc>
   </url>
   
 </urlset>
