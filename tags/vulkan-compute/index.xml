@@ -8,12 +8,12 @@
     <language>en-us</language>
     <lastBuildDate>Wed, 07 Jul 2021 12:08:26 +0100</lastBuildDate><atom:link href="https://mcleary.github.io/tags/vulkan-compute/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>A Simple Vulkan Compute Example in C&#43;&#43;</title>
+      <title>Vulkan Compute Example</title>
       <link>https://mcleary.github.io/posts/vulkan-compute-example/</link>
       <pubDate>Wed, 07 Jul 2021 12:08:26 +0100</pubDate>
       
       <guid>https://mcleary.github.io/posts/vulkan-compute-example/</guid>
-      <description>Vulkan is great. It provides a cross-platform API to write applications that use the GPU to do graphics and general purpose compute. Designed from the ground-up to be a modern API, using Vulkan can be quite difficult so you better know what you&amp;rsquo;re doing if you plan to use Vulkan for your application.
+      <description>A Simple Vulkan Compute Example in C++ Vulkan is great. It provides a cross-platform API to write applications that use the GPU to do graphics and general purpose compute. Designed from the ground-up to be a modern API, using Vulkan can be quite difficult so you better know what you&amp;rsquo;re doing if you plan to use Vulkan for your application.
 Vulkan provides both a graphics and compute APIs and in this post I will focus on the compute part of it as I&amp;rsquo;m still not very familiar with the graphics side of it.</description>
     </item>
     
