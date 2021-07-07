@@ -117,7 +117,7 @@ Vulkan provides both a graphics and compute APIs and in this post I will focus o
     <div class="post-item post-meta">
         <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-07-07</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2464 words</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2463 words</span>
 <span><i class="iconfont icon-time-sharp"></i>&nbsp;12 minutes</span>
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/vulkan">vulkan</a>&nbsp;<a href="/tags/vulkan-compute">vulkan-compute</a>&nbsp;<a href="/tags/gpgpu">GPGPU</a>&nbsp;</span>
 
@@ -328,7 +328,7 @@ void Main(uint3 DTid : SV_DispatchThreadID)
 }
 </code></pre><p>The only difference from a regular HLSL shader are the annotations for each buffer.
 <code>[[vk::binding(1, 0)]]</code> means that a buffer will use binding 1 from descriptor set 0.
-Descriptor sets can be thought of a way to tell Vulkan how to the buffers we defined
+Descriptor sets can be thought of a way to tell Vulkan how the buffers we defined
 in the previous section are going to be passed to the pipeline. If you have an existing
 HLSL shader that you want to use but you can&rsquo;t change the its source code to have the
 bindings, you can still set the bindings in the command line using <code>dxc</code> using the
