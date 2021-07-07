@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Baked Bits</title>
-    <link>https://mcleary.github.io/</link>
-    <description>Recent content on Baked Bits</description>
+    <title>GPGPU on Baked Bits</title>
+    <link>https://mcleary.github.io/tags/gpgpu/</link>
+    <description>Recent content in GPGPU on Baked Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 07 Jul 2021 12:08:26 +0100</lastBuildDate><atom:link href="https://mcleary.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 07 Jul 2021 12:08:26 +0100</lastBuildDate><atom:link href="https://mcleary.github.io/tags/gpgpu/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Vulkan Compute Example</title>
       <link>https://mcleary.github.io/posts/vulkan-compute-example/</link>
@@ -15,17 +15,6 @@
       <guid>https://mcleary.github.io/posts/vulkan-compute-example/</guid>
       <description>A Simple Vulkan Compute Example in C++ Vulkan is great. It provides a cross-platform API to write applications that use the GPU to do graphics and general purpose compute. Designed from the ground-up to be a modern API, using Vulkan can be quite difficult so you better know what you&amp;rsquo;re doing if you plan to use Vulkan for your application.
 Vulkan provides both a graphics and compute APIs and in this post I will focus on the compute part of it as I&amp;rsquo;m still not very familiar with the graphics side of it.</description>
-    </item>
-    
-    <item>
-      <title>About Hugo</title>
-      <link>https://mcleary.github.io/about/</link>
-      <pubDate>Sat, 11 Apr 2020 19:15:32 +0800</pubDate>
-      
-      <guid>https://mcleary.github.io/about/</guid>
-      <description>Written in Go, Hugo is an open source static site generator available under the Apache Licence 2.0. Hugo supports TOML, YAML and JSON data file types, Markdown and HTML content files and uses shortcodes to add rich content. Other notable features are taxonomies, multilingual mode, image processing, custom output formats, HTML/CSS/JS minification and support for Sass SCSS workflows.
-Hugo makes use of a variety of open source projects including:
- https://github.</description>
     </item>
     
   </channel>
