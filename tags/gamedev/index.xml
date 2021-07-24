@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>GameDev on Baked Bits</title>
+    <link>https://mcleary.github.io/tags/gamedev/</link>
+    <description>Recent content in GameDev on Baked Bits</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 24 Jul 2021 12:09:47 +0100</lastBuildDate><atom:link href="https://mcleary.github.io/tags/gamedev/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Creating Unreal Engine 4 Data Assets using only Blueprints</title>
+      <link>https://mcleary.github.io/posts/unreal-data-assets-from-blueprints/</link>
+      <pubDate>Sat, 24 Jul 2021 12:09:47 +0100</pubDate>
+      
+      <guid>https://mcleary.github.io/posts/unreal-data-assets-from-blueprints/</guid>
+      <description>In Unreal Engine&amp;rsquo;s terminology, a Data Asset is an asset that stores, guess what, data. It can be used, for example, to decouple the configuration from behaviour.
+Data Assets in Unreal Engine all inherit from the UDataAsset. You can define a new Data Asset type by inheriting from UDataAsset and then your new data asset will become available in the Pick Data Asset Class Dialog:
+I&amp;rsquo;m used to create new data assets using C++, you inherit from UDataAsset, add some members with UPROPERTY and done, however, recently I wanted to create one using only Blueprints.</description>
+    </item>
+    
+  </channel>
+</rss>
