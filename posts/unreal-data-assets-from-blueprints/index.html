@@ -16,7 +16,7 @@
 
 
 
-<title>Tags - Baked Bits</title>
+<title>Creating Unreal Engine 4 Data Assets using only Blueprints - Baked Bits</title>
 
 
 <meta name="author" content="Thales Sabino" />
@@ -25,12 +25,16 @@
 <meta name="description" content="Thoughts and opinions on computer related stuff." />
 
 
-<link rel="alternate" type="application/rss+xml" href="https://mcleary.github.io/tags/index.xml" title="Baked Bits" />
 
-<meta property="og:title" content="Tags" />
-<meta name="twitter:title" content="Tags" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://mcleary.github.io/tags/" /><meta name="twitter:card" content="summary" /><meta property="og:updated_time" content="2021-07-07T12:08:26+01:00" />
+<meta property="og:title" content="Creating Unreal Engine 4 Data Assets using only Blueprints" />
+<meta name="twitter:title" content="Creating Unreal Engine 4 Data Assets using only Blueprints" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mcleary.github.io/posts/unreal-data-assets-from-blueprints/" /><meta property="og:description" content="In Unreal Engine&rsquo;s terminology, a Data Asset is an asset that stores, guess what, data. It can be used, for example, to decouple the configuration from behaviour.
+Data Assets in Unreal Engine all inherit from the UDataAsset. You can define a new Data Asset type by inheriting from UDataAsset and then your new data asset will become available in the Pick Data Asset Class Dialog:
+I&rsquo;m used to create new data assets using C&#43;&#43;, you inherit from UDataAsset, add some members with UPROPERTY and done, however, recently I wanted to create one using only Blueprints." />
+<meta name="twitter:description" content="In Unreal Engine&rsquo;s terminology, a Data Asset is an asset that stores, guess what, data. It can be used, for example, to decouple the configuration from behaviour.
+Data Assets in Unreal Engine all inherit from the UDataAsset. You can define a new Data Asset type by inheriting from UDataAsset and then your new data asset will become available in the Pick Data Asset Class Dialog:
+I&rsquo;m used to create new data assets using C&#43;&#43;, you inherit from UDataAsset, add some members with UPROPERTY and done, however, recently I wanted to create one using only Blueprints." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2021-07-24T12:09:47+01:00" /><meta property="article:modified_time" content="2021-07-24T12:09:47+01:00" />
 
 
 <style>
@@ -105,10 +109,8 @@
             
             <div class="col-12 col-md-9 float-left content">
                 
-
-
-
-<div class="post">
+<article>
+    
     <h2 class="post-item post-title">
         <a href="https://mcleary.github.io/posts/unreal-data-assets-from-blueprints/">Creating Unreal Engine 4 Data Assets using only Blueprints</a>
     </h2>
@@ -120,30 +122,44 @@
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;No tag</span>
 
     </div>
-    <div class="post-item post-summary markdown-body">
-        In Unreal Engine&rsquo;s terminology, a Data Asset is an asset that stores, guess what, data. It can be used, for example, to decouple the configuration from behaviour.
-Data Assets in Unreal Engine all inherit from the UDataAsset. You can define a new Data Asset type by inheriting from UDataAsset and then your new data asset will become available in the Pick Data Asset Class Dialog:
-I&rsquo;m used to create new data assets using C++, you inherit from UDataAsset, add some members with UPROPERTY and done, however, recently I wanted to create one using only Blueprints.
-    </div>
-</div>
+    
+    <div class="post-content markdown-body">
+        <p>In Unreal Engine&rsquo;s terminology, a <strong>Data Asset</strong> is an asset that stores, guess what, <strong>data</strong>.
+It can be used, for example, to decouple the configuration from behaviour.</p>
+<p>Data Assets in Unreal Engine all inherit from the <a href="https://docs.unrealengine.com/4.26/en-US/API/Runtime/Engine/Engine/UDataAsset/" target="_blank"><code>UDataAsset</code></a>.
+You can define a new Data Asset type by inheriting from <a href="https://docs.unrealengine.com/4.26/en-US/API/Runtime/Engine/Engine/UDataAsset/" target="_blank"><code>UDataAsset</code></a> and then your new data asset will become available
+in the <em>Pick Data Asset Class Dialog</em>:</p>
+<p><img class="img-zoomable" src="/images/CreatingNewDataAsset.png" alt="new-data-asset" />
+</p>
+<p><img class="img-zoomable" src="/images/PickDataAssetClassDialog.png" alt="pick-data-asset" />
+</p>
+<p>I&rsquo;m used to create new data assets using C++, you inherit from <code>UDataAsset</code>, add some members with <code>UPROPERTY</code> and done, however, recently I wanted to create one using only Blueprints.
+Looking into existing tutorials on data assets, people usually say that you <em>must</em> create your data asset type in C++ first.</p>
+<p>That is actually true, but only if you want to inherit directly from <code>UDataAsset</code>. But there is a way to create a new data assets using only blueprints.</p>
+<p>The procedure is as follows:</p>
+<ol>
+<li>Create a new Blueprint class that inherits from <a href="https://docs.unrealengine.com/4.26/en-US/API/Runtime/Engine/Engine/UPrimaryDataAsset/" target="_blank"><code>UPrimaryDataAsset</code></a></li>
+<li>Add variables in your Blueprint</li>
+<li>Your blueprint class will now be available in the <em>Pick Data Asset Class Dialog</em>.</li>
+</ol>
+<p><img class="img-zoomable" src="/images/PrimaryDataAsset.png" alt="primary-data-asset" />
+</p>
+<p>Here is a simple example of a blueprint that inherits from <code>UPrimaryDataAsset</code> with three variables:</p>
+<p><img class="img-zoomable" src="/images/BP_DataAssetType.png" alt="bp-data-asset-type" />
+</p>
+<p>And the blueprint type showing up as a new data asset type:</p>
+<p><img class="img-zoomable" src="/images/NewBPAssetType.png" alt="new-bp-data-asset" />
+</p>
+<p>When you create a new asset of this type and double click in it, you can see that all the variables from the blueprint class are now fields of the new data asset:</p>
+<p><img class="img-zoomable" src="/images/NewDataAssetEditor.png" alt="new-data-asset-editor" />
+</p>
+<p>So this is how you create a new data asset type using only blueprints, no C++ involved.</p>
 
-<div class="post">
-    <h2 class="post-item post-title">
-        <a href="https://mcleary.github.io/posts/vulkan-compute-example/">A Simple Vulkan Compute Example in C&#43;&#43;</a>
-    </h2>
-    <div class="post-item post-meta">
-        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-07-07</span>
-
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2463 words</span>
-<span><i class="iconfont icon-time-sharp"></i>&nbsp;12 minutes</span>
-<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/vulkan">vulkan</a>&nbsp;<a href="/tags/vulkan-compute">vulkan-compute</a>&nbsp;<a href="/tags/gpgpu">GPGPU</a>&nbsp;</span>
-
     </div>
-    <div class="post-item post-summary markdown-body">
-        Vulkan is great. It provides a cross-platform API to write applications that use the GPU to do graphics and general purpose compute. Designed from the ground-up to be a modern API, using Vulkan can be quite difficult so you better know what you&rsquo;re doing if you plan to use Vulkan for your application.
-Vulkan provides both a graphics and compute APIs and in this post I will focus on the compute part of it as I&rsquo;m still not very familiar with the graphics side of it.
-    </div>
-</div>
+</article>
+
+
+
 
             </div>
             <aside class="col-12 col-md-3 float-left sidebar">
@@ -208,9 +224,8 @@ Vulkan provides both a graphics and compute APIs and in this post I will focus o
             
         </div>
     </div>
-    
-    
-    
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents"></nav></div>
 </aside>
 
         </div>
@@ -288,6 +303,8 @@ Vulkan provides both a graphics and compute APIs and in this post I will focus o
             
         </div>
     </div>
+    
+    
     
     
   </div>
