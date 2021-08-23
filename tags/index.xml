@@ -6,7 +6,43 @@
     <description>Recent content in Tags on Baked Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sat, 24 Jul 2021 12:09:47 +0100</lastBuildDate><atom:link href="https://mcleary.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 22 Aug 2021 20:05:21 +0100</lastBuildDate><atom:link href="https://mcleary.github.io/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>GPGPU</title>
+      <link>https://mcleary.github.io/tags/gpgpu/</link>
+      <pubDate>Sun, 22 Aug 2021 20:05:21 +0100</pubDate>
+      
+      <guid>https://mcleary.github.io/tags/gpgpu/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>memory</title>
+      <link>https://mcleary.github.io/tags/memory/</link>
+      <pubDate>Sun, 22 Aug 2021 20:05:21 +0100</pubDate>
+      
+      <guid>https://mcleary.github.io/tags/memory/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vulkan</title>
+      <link>https://mcleary.github.io/tags/vulkan/</link>
+      <pubDate>Sun, 22 Aug 2021 20:05:21 +0100</pubDate>
+      
+      <guid>https://mcleary.github.io/tags/vulkan/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>vulkan-compute</title>
+      <link>https://mcleary.github.io/tags/vulkan-compute/</link>
+      <pubDate>Sun, 22 Aug 2021 20:05:21 +0100</pubDate>
+      
+      <guid>https://mcleary.github.io/tags/vulkan-compute/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>Assets</title>
       <link>https://mcleary.github.io/tags/assets/</link>
@@ -40,33 +76,6 @@
       <pubDate>Sat, 24 Jul 2021 12:09:47 +0100</pubDate>
       
       <guid>https://mcleary.github.io/tags/unreal-engine-4/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>GPGPU</title>
-      <link>https://mcleary.github.io/tags/gpgpu/</link>
-      <pubDate>Wed, 07 Jul 2021 12:08:26 +0100</pubDate>
-      
-      <guid>https://mcleary.github.io/tags/gpgpu/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>vulkan</title>
-      <link>https://mcleary.github.io/tags/vulkan/</link>
-      <pubDate>Wed, 07 Jul 2021 12:08:26 +0100</pubDate>
-      
-      <guid>https://mcleary.github.io/tags/vulkan/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>vulkan-compute</title>
-      <link>https://mcleary.github.io/tags/vulkan-compute/</link>
-      <pubDate>Wed, 07 Jul 2021 12:08:26 +0100</pubDate>
-      
-      <guid>https://mcleary.github.io/tags/vulkan-compute/</guid>
       <description></description>
     </item>
     

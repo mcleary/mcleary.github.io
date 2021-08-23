@@ -30,7 +30,7 @@
 <meta property="og:title" content="Tags" />
 <meta name="twitter:title" content="Tags" />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://mcleary.github.io/tags/" /><meta name="twitter:card" content="summary" /><meta property="og:updated_time" content="2021-07-24T12:09:47+01:00" />
+<meta property="og:url" content="https://mcleary.github.io/tags/" /><meta name="twitter:card" content="summary" /><meta property="og:updated_time" content="2021-08-22T20:05:21+01:00" />
 
 
 <style>
@@ -110,6 +110,24 @@
 
 <div class="post">
     <h2 class="post-item post-title">
+        <a href="https://mcleary.github.io/posts/vulkan-memory-allocator/">Easy Memory Management with the Vulkan Memory Allocator</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-08-22</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;721 words</span>
+<span><i class="iconfont icon-time-sharp"></i>&nbsp;4 minutes</span>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/vulkan">vulkan</a>&nbsp;<a href="/tags/vulkan-compute">vulkan-compute</a>&nbsp;<a href="/tags/gpgpu">GPGPU</a>&nbsp;<a href="/tags/memory">memory</a>&nbsp;</span>
+
+    </div>
+    <div class="post-item post-summary markdown-body">
+        In my post A Simple Vulkan Compute Example in C++ I described the hello world of Vulkan Compute. A very simple application that squares a vector of integers using a HLSL compute shader. It is quite an involved process, requiring many steps to be completed before getting to the actual compute shader execution. You need to:
+ Create a Vulkan Instance, Physical Device, Logical Device Find the flags required to create a compute Queue Create the buffers that the shader will operate on:  Query the memory requirements for a particular buffer Find the index of the memory type to create the buffer from Allocate Memory for the buffers Map the memory and fill it with the data you want Bind the buffers to the memory   Create a Descriptor Set, Shader Module, Pipeline Create a Command Pool, Command Buffer, Fences Dispatch the shader Wait for completion Map the buffers and read the results back  It is a rather complex process just to run some program on your GPU.
+    </div>
+</div>
+
+<div class="post">
+    <h2 class="post-item post-title">
         <a href="https://mcleary.github.io/posts/unreal-data-assets-from-blueprints/">Creating Unreal Engine 4 Data Assets using only Blueprints</a>
     </h2>
     <div class="post-item post-meta">
@@ -134,7 +152,7 @@ I&rsquo;m used to create new data assets using C++, you inherit from UDataAsset,
     <div class="post-item post-meta">
         <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-07-07</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2463 words</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2474 words</span>
 <span><i class="iconfont icon-time-sharp"></i>&nbsp;12 minutes</span>
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/vulkan">vulkan</a>&nbsp;<a href="/tags/vulkan-compute">vulkan-compute</a>&nbsp;<a href="/tags/gpgpu">GPGPU</a>&nbsp;</span>
 
@@ -204,6 +222,10 @@ Vulkan provides both a graphics and compute APIs and in this post I will focus o
             
             <span>
                 <a href="/tags/gpgpu/">GPGPU</a>
+            </span>
+            
+            <span>
+                <a href="/tags/memory/">memory</a>
             </span>
             
             <span>
@@ -300,6 +322,10 @@ Vulkan provides both a graphics and compute APIs and in this post I will focus o
             
             <span>
                 <a href="/tags/gpgpu/">GPGPU</a>
+            </span>
+            
+            <span>
+                <a href="/tags/memory/">memory</a>
             </span>
             
             <span>
