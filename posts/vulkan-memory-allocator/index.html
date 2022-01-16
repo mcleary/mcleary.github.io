@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.79.0" />
+<meta name="generator" content="Hugo 0.92.0" />
 
 
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/dsrkafuu/dsr-cdn-main@1/images/favicons/dsrca.ico" />
@@ -168,11 +168,11 @@ The <a href="https://gpuopen-librariesandsdks.github.io/VulkanMemoryAllocator/ht
 <h2 id="basic-usage">Basic usage</h2>
 <p>This is a single-header C++ library with a C interface. You can just put the header in your repository
 and done, installed. You just need to include the following:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#define VMA_IMPLEMENTATION
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#define VMA_IMPLEMENTATION
 </span><span style="color:#75715e">#include</span> <span style="color:#75715e">&#34;vk_mem_alloc.h&#34;</span><span style="color:#75715e">
 </span></code></pre></div><p>The <code>VMA_IMPLEMENTATION</code> macro needs to be defined in a single source file or you will get linker errors, so it is recommended that you create a dedicated translation unit just for that.</p>
 <p>You start by creating an allocator:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">VmaAllocatorCreateInfo AllocatorInfo <span style="color:#f92672">=</span> {};
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">VmaAllocatorCreateInfo AllocatorInfo <span style="color:#f92672">=</span> {};
 AllocatorInfo.vulkanApiVersion <span style="color:#f92672">=</span> DeviceProps.apiVersion;
 AllocatorInfo.physicalDevice <span style="color:#f92672">=</span> PhysicalDevice;
 AllocatorInfo.device <span style="color:#f92672">=</span> Device;
@@ -181,7 +181,7 @@ AllocatorInfo.instance <span style="color:#f92672">=</span> Instance;
 VmaAllocator Allocator;
 vmaCreateAllocator(<span style="color:#f92672">&amp;</span>AllocatorInfo, <span style="color:#f92672">&amp;</span>Allocator);
 </code></pre></div><p>Then you can start creating buffers:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">VkBuffer InBufferRaw;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">VkBuffer InBufferRaw;
 VkBuffer OutBufferRaw;
 
 VmaAllocationCreateInfo AllocationInfo <span style="color:#f92672">=</span> {};
@@ -219,7 +219,7 @@ handles the details for you, and what&rsquo;s best, it does it very efficiently.
 <h3 id="visualising-memory-allocations">Visualising Memory Allocations</h3>
 <p>One very neat feature of this library is its capability to display your memory allocations in a visual way.</p>
 <p>At any point in your program you can build a stats string, which is a json file containing the internals of the library. This json can then be fed into a tool that comes with the library to generate an image that shows you how your application is using the memory, you can see more information on the <a href="https://github.com/GPUOpen-LibrariesAndSDKs/VulkanMemoryAllocator/tree/master/tools/VmaDumpVis" target="_blank">VmaDumpVis on Github</a>, but you can basically do this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> StatsString <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">char</span><span style="color:#f92672">*</span> StatsString <span style="color:#f92672">=</span> <span style="color:#66d9ef">nullptr</span>;
 vmaBuildStatsString(Allocator, <span style="color:#f92672">&amp;</span>StatsString, true);
 {
     std<span style="color:#f92672">::</span>ofstream OutStats{ <span style="color:#e6db74">&#34;VmaStats.json&#34;</span> };
@@ -229,7 +229,7 @@ vmaFreeStatsString(Allocator, StatsString);
 </code></pre></div><p>And then run the <code>VmaDumpVis.py</code> script with this file to get an image with a snapshot of your memory allocations. Pretty cool!</p>
 <p>To conclude, this library is super useful, efficient and easy to integrate and you should really use it in your Vulkan application.</p>
 <p>I have updated my <a href="https://github.com/mcleary/VulkanHpp-Compute-Sample" target="_blank">Vulkan Compute Sample on Github</a> to include an example of how to integrate VMA in an application. You can disable VMA by simply commenting the line</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// Comment this to disable VMA support
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">// Comment this to disable VMA support
 </span><span style="color:#75715e"></span><span style="color:#75715e">#define WITH_VMA
 </span></code></pre></div><p>This shows how easy it is to replace memory allocations in Vulkan with VMA</p>
 
@@ -442,7 +442,7 @@ vmaFreeStatsString(Allocator, StatsString);
     <div class="container-lg clearfix">
         <div class="col-12 footer">
             
-            <span>&copy; 2021
+            <span>&copy; 2022
                 <a href="https://mcleary.github.io">Thales Sabino</a>
                 
                 | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
