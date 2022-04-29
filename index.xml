@@ -6,7 +6,16 @@
     <description>Recent content on Baked Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 22 Aug 2021 20:05:21 +0100</lastBuildDate><atom:link href="https://mcleary.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Fri, 29 Apr 2022 14:37:14 +0100</lastBuildDate><atom:link href="https://mcleary.github.io/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Modern Sponza UE5</title>
+      <link>https://mcleary.github.io/posts/modern-sponza-ue5/</link>
+      <pubDate>Fri, 29 Apr 2022 14:37:14 +0100</pubDate>
+      
+      <guid>https://mcleary.github.io/posts/modern-sponza-ue5/</guid>
+      <description>The Modern Sponza rendered in Unreal Engine 5 with Lumen The original Sponza scene is a classic in the field of computer graphics research. Originally created by Crytek for use in CRYENGINE for testing rendering features it was quickly adopted by the community making appearances in several academic papers and CG experiments. The original scene can still be downloading from the CRYENGINE Marketplace and, to this day, it is an amazing piece of graphics to look at.</description>
+    </item>
+    
     <item>
       <title>Easy Memory Management with the Vulkan Memory Allocator</title>
       <link>https://mcleary.github.io/posts/vulkan-memory-allocator/</link>
