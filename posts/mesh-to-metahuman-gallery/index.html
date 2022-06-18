@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+<meta name="HandheldFriendly" content="True" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<meta name="generator" content="Hugo 0.92.0" />
+
+
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/dsrkafuu/dsr-cdn-main@1/images/favicons/dsrca.ico" />
+
+
+
+<title>Mesh to MetaHuman Gallery - Baked Bits</title>
+
+
+<meta name="author" content="Thales Sabino" />
+
+
+<meta name="description" content="Thoughts and opinions on computer related stuff." />
+
+
+<meta name="keywords" content="Unreal Engine, Unreal Engine 5, UE5, MetaHuman, Mesh to MetaHuman" />
+
+
+<meta property="og:title" content="Mesh to MetaHuman Gallery" />
+<meta name="twitter:title" content="Mesh to MetaHuman Gallery" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://mcleary.github.io/posts/mesh-to-metahuman-gallery/" /><meta property="og:description" content="Mesh to MetaHuman Gallery A collection of MetaHumans created using the new Mesh to MetaHuman tool in the new MetaHuman Plugin for Unreal Engine 5
+Official Documentation  Mesh to MetaHuman Mesh to MetaHuman Quick Start       Press Coverage  fxGuide: Huge update for MetaHuman : Import your own head! AWN: Unreal Engine Mesh to MetaHuman Plugin Now Available 80.tv: Epic Games&#39; New Release Brings a Mesh to MetaHuman Feature to UE GameFromScratch: Make Your Own MetaHuman in Unreal Engine 5 CGPress: Epic updated Metahuman with ability to import custom character meshes  Twitter Turning Buddha into a #MetaHuman using the new MetaHuman plugin for Unreal Engine 5 #UnrealEngine5 #MeshToMetaHuman pic." />
+<meta name="twitter:description" content="Mesh to MetaHuman Gallery A collection of MetaHumans created using the new Mesh to MetaHuman tool in the new MetaHuman Plugin for Unreal Engine 5
+Official Documentation  Mesh to MetaHuman Mesh to MetaHuman Quick Start       Press Coverage  fxGuide: Huge update for MetaHuman : Import your own head! AWN: Unreal Engine Mesh to MetaHuman Plugin Now Available 80.tv: Epic Games&#39; New Release Brings a Mesh to MetaHuman Feature to UE GameFromScratch: Make Your Own MetaHuman in Unreal Engine 5 CGPress: Epic updated Metahuman with ability to import custom character meshes  Twitter Turning Buddha into a #MetaHuman using the new MetaHuman plugin for Unreal Engine 5 #UnrealEngine5 #MeshToMetaHuman pic." /><meta name="twitter:card" content="summary" /><meta property="article:published_time" content="2022-06-18T20:33:32+01:00" /><meta property="article:modified_time" content="2022-06-18T20:33:32+01:00" />
+
+
+<style>
+    @media (prefers-color-scheme: dark) {
+        body[data-theme='auto'] img {
+            filter: brightness(60%);
+        }
+    }
+
+    body[data-theme='dark'] img {
+        filter: brightness(60%);
+    }
+</style>
+
+
+
+
+<link rel="stylesheet" href="https://mcleary.github.io/assets/css/fuji.min.css" />
+
+
+
+
+
+<script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-46W3N06B4R');
+</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-46W3N06B4R"></script>
+
+
+
+
+
+</head>
+
+<body
+  data-theme="auto"
+  data-theme-auto='false'
+  >
+    <script data-cfasync="false">
+  
+  var fujiThemeData = localStorage.getItem('fuji_data-theme');
+  
+  if (!fujiThemeData) {
+    localStorage.setItem('fuji_data-theme', 'auto');
+  } else {
+    
+    if (fujiThemeData !== 'auto') {
+      document.body.setAttribute('data-theme', fujiThemeData === 'dark' ? 'dark' : 'light');
+    }
+  }
+</script>
+
+    <header>
+    <div class="container-lg clearfix">
+        <div class="col-12 header">
+            <a class="title-main" href="https://mcleary.github.io">Baked Bits</a>
+            
+            <span class="title-sub">A good bit is a baked bit</span>
+            
+        </div>
+    </div>
+</header>
+
+    <main>
+        <div class="container-lg clearfix">
+            
+            <div class="col-12 col-md-9 float-left content">
+                
+<article>
+    
+    <h2 class="post-item post-title">
+        <a href="https://mcleary.github.io/posts/mesh-to-metahuman-gallery/">Mesh to MetaHuman Gallery</a>
+    </h2>
+    <div class="post-item post-meta">
+        <span><i class="iconfont icon-today-sharp"></i>&nbsp;2022-06-18</span>
+
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2308 words</span>
+<span><i class="iconfont icon-time-sharp"></i>&nbsp;11 minutes</span>
+<span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/unreal-engine">Unreal Engine</a>&nbsp;<a href="/tags/unreal-engine-5">Unreal Engine 5</a>&nbsp;<a href="/tags/ue5">UE5</a>&nbsp;<a href="/tags/metahuman">MetaHuman</a>&nbsp;<a href="/tags/mesh-to-metahuman">Mesh to MetaHuman</a>&nbsp;</span>
+
+    </div>
+    
+    <div class="post-content markdown-body">
+        <h1 id="mesh-to-metahuman-gallery">Mesh to MetaHuman Gallery</h1>
+<p>A collection of MetaHumans created using the new <strong>Mesh to MetaHuman</strong> tool in the new <strong>MetaHuman Plugin for Unreal Engine 5</strong></p>
+<h2 id="official-documentation">Official Documentation</h2>
+<ul>
+<li><a href="https://docs.metahuman.unrealengine.com/en-US/mesh-to-metahuman-in-unreal-engine/" target="_blank">Mesh to MetaHuman</a></li>
+<li><a href="https://docs.metahuman.unrealengine.com/en-US/mesh-to-metahuman-quick-start-in-unreal-engine/" target="_blank">Mesh to MetaHuman Quick Start</a></li>
+</ul>
+<p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/Aa2r9nbt6SA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/xOVyme4TFZw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</p>
+<h2 id="press-coverage">Press Coverage</h2>
+<ul>
+<li>fxGuide: <a href="https://www.fxguide.com/fxfeatured/huge-update-for-metahuman-import-your-own-head" target="_blank">Huge update for MetaHuman : Import your own head!</a></li>
+<li>AWN: <a href="https://www.awn.com/news/unreal-engine-mesh-metahuman-plugin-now-available" target="_blank">Unreal Engine Mesh to MetaHuman Plugin Now Available</a></li>
+<li>80.tv: <a href="https://80.lv/articles/epic-games-new-release-brings-a-mesh-to-metahuman-feature-to-ue/" target="_blank">Epic Games' New Release Brings a Mesh to MetaHuman Feature to UE</a></li>
+<li>GameFromScratch: <a href="https://gamefromscratch.com/make-your-own-metahuman-in-unreal-engine-5/" target="_blank">Make Your Own MetaHuman in Unreal Engine 5</a></li>
+<li>CGPress: <a href="https://cgpress.org/archives/epic-updated-metahuman-with-ability-to-import-custom-character-meshes.html" target="_blank">Epic updated Metahuman with ability to import custom character meshes</a></li>
+</ul>
+<h2 id="twitter">Twitter</h2>
+<p><blockquote class="twitter-tweet"><p lang="en" dir="ltr">Turning Buddha into a <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> using the new MetaHuman plugin for Unreal Engine 5 <a href="https://twitter.com/hashtag/UnrealEngine5?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine5</a> <a href="https://twitter.com/hashtag/MeshToMetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MeshToMetaHuman</a> <a href="https://t.co/giMyvypmUR">pic.twitter.com/giMyvypmUR</a></p>&mdash; Thales (@tluisrs) <a href="https://twitter.com/tluisrs/status/1535748825519882241?ref_src=twsrc%5Etfw">June 11, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">自分を雑にMetaHuman化してみた　ざっくりまとめ<br><br>1.HeadShotというソフトを使って一枚絵から3Dモデルを生成<br>2. <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> にインポート後、Mesh to MetaHumanを使って↑のモデルを <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> に<br>3. 髪やテクスチャは持ってこれないので、MetaHuman　Creator上で色々調整<br>4. ｳｪｰｲ <a href="https://t.co/BEX1OnuvbA">https://t.co/BEX1OnuvbA</a> <a href="https://t.co/8IQ9Xk3aCv">pic.twitter.com/8IQ9Xk3aCv</a></p>&mdash; おかず (@pafuhana1213) <a href="https://twitter.com/pafuhana1213/status/1534952781861093376?ref_src=twsrc%5Etfw">June 9, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Trying facial scanning before testing the new <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> plugin. <a href="https://twitter.com/RealityCapture_?ref_src=twsrc%5Etfw">@RealityCapture_</a> vs <a href="https://twitter.com/Polycam3D?ref_src=twsrc%5Etfw">@Polycam3D</a>:<br><br>RC looks much better, but keeps saying a bunch of my images can&#39;t align, so I get partial scans. Polycam also has issues importing into Unreal as GLB. App look vs in UE5 on the right <a href="https://t.co/nkxlPFjnPv">pic.twitter.com/nkxlPFjnPv</a></p>&mdash; Alex Coulombe (@iBrews) <a href="https://twitter.com/iBrews/status/1534936641936433152?ref_src=twsrc%5Etfw">June 9, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Just tried the custom character mesh feature for <a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@UnrealEngine</a>&#39;s <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> on my <a href="https://twitter.com/streetboyja?ref_src=twsrc%5Etfw">@streetboyja</a>  character... I&#39;m still in shock! Absolutely amazing!  <a href="https://twitter.com/hashtag/unrealengine5?src=hash&amp;ref_src=twsrc%5Etfw">#unrealengine5</a> <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/unrealengine?src=hash&amp;ref_src=twsrc%5Etfw">#unrealengine</a> <a href="https://twitter.com/hashtag/gamedev?src=hash&amp;ref_src=twsrc%5Etfw">#gamedev</a> <a href="https://twitter.com/hashtag/indiedev?src=hash&amp;ref_src=twsrc%5Etfw">#indiedev</a> <a href="https://twitter.com/hashtag/3dart?src=hash&amp;ref_src=twsrc%5Etfw">#3dart</a> <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> <a href="https://twitter.com/hashtag/characterdesign?src=hash&amp;ref_src=twsrc%5Etfw">#characterdesign</a> <a href="https://t.co/uBVG5sbPyP">pic.twitter.com/uBVG5sbPyP</a></p>&mdash; Akeem Pennicooke (@AkeemPennicooke) <a href="https://twitter.com/AkeemPennicooke/status/1534982512891789312?ref_src=twsrc%5Etfw">June 9, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">So here&#39;s the new Mesh to Metahuman tool in action. It&#39;s great at getting the overall shape, but the major caveat is that it does *not* transfer any textures, so you&#39;ll need to do some manual texture painting to transfer that. <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> <a href="https://twitter.com/hashtag/UnrealEngine?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine</a> <a href="https://t.co/LjSimNjXhb">pic.twitter.com/LjSimNjXhb</a></p>&mdash; Brielle Garcia (47%) (@tacolamp) <a href="https://twitter.com/tacolamp/status/1534990708678922240?ref_src=twsrc%5Etfw">June 9, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Tried the new <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> workflow today, took a bulky 3D scan through the process and it was super quick+easy. Just wow, what a game changer. <a href="https://twitter.com/hashtag/UnrealEngine5?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine5</a> <br>(process screenshots below) <a href="https://t.co/KdieI6Fx0b">pic.twitter.com/KdieI6Fx0b</a></p>&mdash; 𝖛𝖆𝖑 🇺🇦 (@VPestilenZ) <a href="https://twitter.com/VPestilenZ/status/1534993115744026624?ref_src=twsrc%5Etfw">June 9, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I threw Cal Kestis from Fallen Order into the new Mesh to Metahuman tools and it seems to work incredibly well. This is huge for short film creators, especially in the Star Wars community. Animating digital characters just got a whole lot easier! <a href="https://t.co/9rqhR9HNy8">pic.twitter.com/9rqhR9HNy8</a></p>&mdash; Frostbite Cinematics  (@FrostbiteCaps) <a href="https://twitter.com/FrostbiteCaps/status/1534988622642003969?ref_src=twsrc%5Etfw">June 9, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Shit just got real 👀 Mesh to Metahuman 👏👏👏 <a href="https://t.co/ehLDmWCE5P">pic.twitter.com/ehLDmWCE5P</a></p>&mdash; Abhijit Vinayak (@AbhijitVinayak) <a href="https://twitter.com/AbhijitVinayak/status/1534980152538501121?ref_src=twsrc%5Etfw">June 9, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Created using Mesh to MetaHuman (metahuman plugin). <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/UnrealEngine?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine</a> <a href="https://twitter.com/hashtag/GameDev?src=hash&amp;ref_src=twsrc%5Etfw">#GameDev</a> <a href="https://t.co/SotWfBYR0Q">pic.twitter.com/SotWfBYR0Q</a></p>&mdash; 🇧🇷 🔺 АLEX 🎮 (@Alex_GameDev_) <a href="https://twitter.com/Alex_GameDev_/status/1534974586479058944?ref_src=twsrc%5Etfw">June 9, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Here&#39;s a more direct comparison of the original scan vs the Metahuman mesh that&#39;s generated. Upon closer inspection, it is *much* more accurate than I thought at first. <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> <a href="https://twitter.com/hashtag/UnrealEngine?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine</a> <a href="https://t.co/UYHEO4fWlB">pic.twitter.com/UYHEO4fWlB</a></p>&mdash; Brielle Garcia (47%) (@tacolamp) <a href="https://twitter.com/tacolamp/status/1535002665477763072?ref_src=twsrc%5Etfw">June 9, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="es" dir="ltr">MESH TO METAHUMAN - Nueva Actualización de Unreal Engine<br><br>Os contamos todo lo nuevo en el artículo!⬇️<a href="https://t.co/PbQBvohrCW">https://t.co/PbQBvohrCW</a><a href="https://twitter.com/hashtag/unrealengine?src=hash&amp;ref_src=twsrc%5Etfw">#unrealengine</a> <a href="https://twitter.com/hashtag/gamedev?src=hash&amp;ref_src=twsrc%5Etfw">#gamedev</a> <a href="https://twitter.com/hashtag/indiedev?src=hash&amp;ref_src=twsrc%5Etfw">#indiedev</a> <a href="https://t.co/fJdr5xuMvE">pic.twitter.com/fJdr5xuMvE</a></p>&mdash; iVisual (@iVisualEstudios) <a href="https://twitter.com/iVisualEstudios/status/1535167248054231040?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">もうちょっ調整してオリキャラをMesh to Metahuman で出力したら、なぜか有吉氏に似てしまった!!😆<a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://t.co/JMopaC3jAF">pic.twitter.com/JMopaC3jAF</a></p>&mdash; wajyuu (@wajyuu2) <a href="https://twitter.com/wajyuu2/status/1535147838753021952?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Trying out the new Mesh to metahuman plugin &amp; And I was REALLY IMPRESSED ! with the results and How close it got to the Source mesh.<br>I Wonder how many people Can guess the celebrity 😉 <a href="https://twitter.com/hashtag/EpicGames?src=hash&amp;ref_src=twsrc%5Etfw">#EpicGames</a> <a href="https://twitter.com/hashtag/metahumans?src=hash&amp;ref_src=twsrc%5Etfw">#metahumans</a> <a href="https://twitter.com/hashtag/metahumancreator?src=hash&amp;ref_src=twsrc%5Etfw">#metahumancreator</a> <a href="https://twitter.com/hashtag/UnrealEngine5?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine5</a> <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://t.co/xAYMxsY3ef">pic.twitter.com/xAYMxsY3ef</a></p>&mdash; Base Reality (@Base_Reality_VR) <a href="https://twitter.com/Base_Reality_VR/status/1535142276552327169?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Well, I turned Agent Flint from <a href="https://twitter.com/lastroundgame?ref_src=twsrc%5Etfw">@lastroundgame</a> into a Metahuman. It&#39;s... a result <a href="https://t.co/4coC34R28X">pic.twitter.com/4coC34R28X</a></p>&mdash; Joe Wintergreen (@joewintergreen) <a href="https://twitter.com/joewintergreen/status/1535094384760602624?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Younger characters also work really well with <a href="https://twitter.com/hashtag/MetahumanCreator?src=hash&amp;ref_src=twsrc%5Etfw">#MetahumanCreator</a> - using the new Mesh to Metahuman tool from the previous sculpt! <a href="https://twitter.com/hashtag/Metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#Metahuman</a> <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@UnrealEngine</a> <a href="https://t.co/Wu04pMjObV">pic.twitter.com/Wu04pMjObV</a></p>&mdash; Charles Logan (@cloganart) <a href="https://twitter.com/cloganart/status/1535059299579625473?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">MESH TO METAHUMAN! COOL AF!</p>&mdash; Jon Noorlander (@JonNoorlander) <a href="https://twitter.com/JonNoorlander/status/1535038285076393986?ref_src=twsrc%5Etfw">June 9, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">More <a href="https://twitter.com/hashtag/MetahumanCreator?src=hash&amp;ref_src=twsrc%5Etfw">#MetahumanCreator</a> Mesh to Metahuman trials - this time with a scan from <a href="https://twitter.com/hashtag/3DScanStore?src=hash&amp;ref_src=twsrc%5Etfw">#3DScanStore</a> <a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@UnrealEngine</a> <a href="https://t.co/8ZIAP5vA2z">pic.twitter.com/8ZIAP5vA2z</a></p>&mdash; Charles Logan (@cloganart) <a href="https://twitter.com/cloganart/status/1535035958697119747?ref_src=twsrc%5Etfw">June 9, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">1-2-3-done. Have fun with the creator. <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://twitter.com/hashtag/UnrealEngine5?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine5</a> <a href="https://twitter.com/hashtag/Metaverse?src=hash&amp;ref_src=twsrc%5Etfw">#Metaverse</a> <a href="https://t.co/h1yxmeJsFD">pic.twitter.com/h1yxmeJsFD</a></p>&mdash; 我的星系是金牛座 (@iamfromtaurus) <a href="https://twitter.com/iamfromtaurus/status/1535150914218360832?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">ウソだろ〜、新しい <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> の <a href="https://twitter.com/hashtag/Metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#Metahuman</a> で俺のオリキャラが生まれ変わったー!!🤣 <a href="https://t.co/RjNnLvAY9p">pic.twitter.com/RjNnLvAY9p</a></p>&mdash; wajyuu (@wajyuu2) <a href="https://twitter.com/wajyuu2/status/1535098787726651394?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">フリーの頭部モデルを雑に取り込んでもちゃんとフェイストラッキングまで機能してるのは優秀だなあ。。。<br><br>Vtuberのボディにまで応用きかせられたらいよいよ演出やレベルデザインの領域に手が届きそう。<a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a><a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://t.co/02Ef2M1OLw">pic.twitter.com/02Ef2M1OLw</a></p>&mdash; いわしゃき🎥UE勉強中 (@iwashaki_write) <a href="https://twitter.com/iwashaki_write/status/1535174878789136384?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">早速MetaHumanのカスタムメッシュでひろゆきを作るも、全然似ても似つかない顔になる。 <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://t.co/0sN9kfaZLm">pic.twitter.com/0sN9kfaZLm</a></p>&mdash; サメジ部長 (@samezi) <a href="https://twitter.com/samezi/status/1535081154864304128?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">From Scan to <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> in less than an hour thanks to the new workflow from <a href="https://twitter.com/EpicGames?ref_src=twsrc%5Etfw">@epicgames</a> and <a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@unrealengine</a> !<a href="https://twitter.com/hashtag/electriclensco?src=hash&amp;ref_src=twsrc%5Etfw">#electriclensco</a> <a href="https://twitter.com/hashtag/unrealengine?src=hash&amp;ref_src=twsrc%5Etfw">#unrealengine</a> <a href="https://twitter.com/hashtag/realitycapture?src=hash&amp;ref_src=twsrc%5Etfw">#realitycapture</a> <a href="https://t.co/SSAhOh6VGK">pic.twitter.com/SSAhOh6VGK</a></p>&mdash; Matthew Hermans (@renbry) <a href="https://twitter.com/renbry/status/1535066070327099392?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Yeah, I also tried Catherine but I need a better hairstyle.<a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/Myst?src=hash&amp;ref_src=twsrc%5Etfw">#Myst</a> <a href="https://twitter.com/hashtag/Riven?src=hash&amp;ref_src=twsrc%5Etfw">#Riven</a> <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://t.co/okscd7i8lS">https://t.co/okscd7i8lS</a> <a href="https://t.co/C40Mm7yPAg">pic.twitter.com/C40Mm7yPAg</a></p>&mdash; Distant Dimensions (@dist_dimensions) <a href="https://twitter.com/dist_dimensions/status/1535188485128298497?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Mesh to Metahuman experiment. Custom zbrush model to metahuman, this stuff is magic.<a href="https://twitter.com/hashtag/metahumancreator?src=hash&amp;ref_src=twsrc%5Etfw">#metahumancreator</a> <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://twitter.com/hashtag/UnrealEngine5?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine5</a>  <a href="https://twitter.com/hashtag/madewithunreal?src=hash&amp;ref_src=twsrc%5Etfw">#madewithunreal</a> <a href="https://t.co/P7HCg99A5J">pic.twitter.com/P7HCg99A5J</a></p>&mdash; Joshua James (@coldpolygon) <a href="https://twitter.com/coldpolygon/status/1535194860147429377?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">The latest UE5 Metahuman Creator update is insane.<br><br>I can&#39;t wait to use this tech in future projects! <a href="https://t.co/R3uOpYpMlv">pic.twitter.com/R3uOpYpMlv</a></p>&mdash; Cinematic Captures (@CineCaptures) <a href="https://twitter.com/CineCaptures/status/1535195217153839104?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ru" dir="ltr">Mesh to Metahuman угар - нашел бесплатную 3D модель лица Гослинга, за пару кликов без особой отстройки создал из этого метахьюмана который готов к анимированию! Да, не очень похоже, но если заморочиться, то можно получить достойный результат. Это, конечно, прорыв! <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://t.co/ulGpHjgXuu">pic.twitter.com/ulGpHjgXuu</a></p>&mdash; Nikolas Winding Samborsky (@NikolsaNNN) <a href="https://twitter.com/NikolsaNNN/status/1535196602427658241?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">iphone 11 + scandyPro + mesh to metahuman = your face in <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> in no time !<a href="https://twitter.com/hashtag/indiedev?src=hash&amp;ref_src=twsrc%5Etfw">#indiedev</a> <a href="https://twitter.com/hashtag/gamedevelopment?src=hash&amp;ref_src=twsrc%5Etfw">#gamedevelopment</a> <a href="https://t.co/vgTQQWZWbj">pic.twitter.com/vgTQQWZWbj</a></p>&mdash; Madao (@lulumadao) <a href="https://twitter.com/lulumadao/status/1535202508846546944?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">New custom Mesh to Metahuman example in Unreal. <br><br>Song: &quot;Bezos IV&quot; by Bo Burnham <a href="https://t.co/9lJy1E6c66">pic.twitter.com/9lJy1E6c66</a></p>&mdash; Brielle Garcia (47%) (@tacolamp) <a href="https://twitter.com/tacolamp/status/1535228309428051968?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Trying out Mesh to MetaHuman with my own scan: here&#39;s the result!<br><br>What do you think?<br><br>I would probably add a texturing step after the Mesh to MetaHuman process, and voilà!<a href="https://twitter.com/hashtag/metahumans?src=hash&amp;ref_src=twsrc%5Etfw">#metahumans</a> <a href="https://twitter.com/hashtag/ue5?src=hash&amp;ref_src=twsrc%5Etfw">#ue5</a> <a href="https://twitter.com/hashtag/unrealengine?src=hash&amp;ref_src=twsrc%5Etfw">#unrealengine</a> <a href="https://twitter.com/hashtag/unrealengine5?src=hash&amp;ref_src=twsrc%5Etfw">#unrealengine5</a> <a href="https://twitter.com/hashtag/digitalhumans?src=hash&amp;ref_src=twsrc%5Etfw">#digitalhumans</a> <a href="https://twitter.com/hashtag/3dscanning?src=hash&amp;ref_src=twsrc%5Etfw">#3dscanning</a> <a href="https://twitter.com/hashtag/characterdesign?src=hash&amp;ref_src=twsrc%5Etfw">#characterdesign</a> <a href="https://t.co/fv5ZT2s4lv">pic.twitter.com/fv5ZT2s4lv</a></p>&mdash; Alvaro / Kukaracha (@ALToloza) <a href="https://twitter.com/ALToloza/status/1535230434325446658?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@UnrealEngine</a> scanning from a Mesh is truly amazing 🤩🔥🤝<a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://twitter.com/hashtag/metahumancreator?src=hash&amp;ref_src=twsrc%5Etfw">#metahumancreator</a> <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/UnrealEngine5?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine5</a> <a href="https://t.co/66AuwZoz80">pic.twitter.com/66AuwZoz80</a></p>&mdash; yassinerahal (@yassinerahal) <a href="https://twitter.com/yassinerahal/status/1535233696525127680?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ko" dir="ltr">이번에 발표된 UE5의 Mesh to Metahuman 기능을 이용해서 기존에 내가 만든 모델링을 Metahuman으로 만들어봤는데 아주 잘 작동한다.<br>좀더 후처리 파라메터가 있으면 좋겠다는 생각이 들지만 아직 현재 진행형으로 발전 중인 툴이니까 전혀 문제되지 않고.<a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://t.co/Sz5lI5WOdv">pic.twitter.com/Sz5lI5WOdv</a></p>&mdash; 한대훈 / Daehoon Han (@Hanguny) <a href="https://twitter.com/Hanguny/status/1535244007349305344?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">MetaHumanPluginで自分の3Dモデルをとりこんでみた！！ 試すのは簡単、それっぽいのができあがる！！<a href="https://t.co/GaZpgv56IT">https://t.co/GaZpgv56IT</a> <a href="https://twitter.com/YouTube?ref_src=twsrc%5Etfw">@YouTube</a>より <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a></p>&mdash; ovjang (@followapp) <a href="https://twitter.com/followapp/status/1535256594467807232?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">MetaHuman 動画キャプチャ3<br>目にメイクいれた <a href="https://t.co/kLymOxoCEj">pic.twitter.com/kLymOxoCEj</a></p>&mdash; h64g (@h64g_) <a href="https://twitter.com/h64g_/status/1535265025451261952?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Testing <a href="https://twitter.com/hashtag/metahumancreator?src=hash&amp;ref_src=twsrc%5Etfw">#metahumancreator</a> Mesh to <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> with a stylized sculpt of mine <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/UE5Study?src=hash&amp;ref_src=twsrc%5Etfw">#UE5Study</a> <a href="https://t.co/WhD8nQEftD">pic.twitter.com/WhD8nQEftD</a></p>&mdash; Louis (@AntieDragon) <a href="https://twitter.com/AntieDragon/status/1535266464093065216?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Tested MetaHuman&#39;s new plugin with a low poly scan of me and it does wonders. Wish there was an easy way to project/apply scanned textures. Current method is using ZWrap, but if any better methods, then suggestions are appreciated! <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@UnrealEngine</a> <a href="https://t.co/fF7YwbqfJ7">pic.twitter.com/fF7YwbqfJ7</a></p>&mdash; Parth Shah (@parthshah91293) <a href="https://twitter.com/parthshah91293/status/1535266793840951298?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">雑にスキャンしたのでMetahuman Identityでは、Men In Blackに出てきそうな宇宙人でした。<br>でも、カスタムメッシュで調整できたので、人類に戻れました。(謝罪：ちょっぴりスリムにしました) <a href="https://t.co/fZ2XMDc3r2">pic.twitter.com/fZ2XMDc3r2</a></p>&mdash; TARK🥷 (@LideTark) <a href="https://twitter.com/LideTark/status/1535213188811137025?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="pt" dir="ltr">Refiz minha filha…em 3D😍. <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> <a href="https://twitter.com/hashtag/unreal?src=hash&amp;ref_src=twsrc%5Etfw">#unreal</a> <a href="https://t.co/cOxg3HTpsU">pic.twitter.com/cOxg3HTpsU</a></p>&mdash; D5 (@alexandredemaio) <a href="https://twitter.com/alexandredemaio/status/1538255675545075714?ref_src=twsrc%5Etfw">June 18, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="es" dir="ltr">😜<br>&quot;Hice&quot; a Dua Lipa con Meta Human de Unreal Engine 5.<br><br>Partí desde blender, luego el nuevo plugin de MetaHuman para UE5.<a href="https://twitter.com/hashtag/Unrealengine5?src=hash&amp;ref_src=twsrc%5Etfw">#Unrealengine5</a> <a href="https://t.co/Dyp7TWgz2C">pic.twitter.com/Dyp7TWgz2C</a></p>&mdash; 👁‍🗨 Incoherencias coherentes 🤖 (@tweetsperdidos) <a href="https://twitter.com/tweetsperdidos/status/1538125559590490112?ref_src=twsrc%5Etfw">June 18, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Seems legit <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> <a href="https://t.co/FnS51gNnzv">pic.twitter.com/FnS51gNnzv</a></p>&mdash; Zarkua (@artzarkua) <a href="https://twitter.com/artzarkua/status/1537931430864375808?ref_src=twsrc%5Etfw">June 17, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">mindblowing! <br>Sculpture A and <a href="https://twitter.com/hashtag/Metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#Metahuman</a> B.<br> Frederick VI of Denmark <a href="https://t.co/Vjmsph3D3w">pic.twitter.com/Vjmsph3D3w</a></p>&mdash; Zarkua (@artzarkua) <a href="https://twitter.com/artzarkua/status/1537927552534073347?ref_src=twsrc%5Etfw">June 17, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">👀 Who’s tested the new Mesh to MetaHuman feature yet?<br><br>Our Creative Director Sam has released a great workflow for the new <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> plugin 💫<br><br>Watch it here: <a href="https://t.co/O3qXq7L6fN">https://t.co/O3qXq7L6fN</a><a href="https://twitter.com/hashtag/madewithrokoko?src=hash&amp;ref_src=twsrc%5Etfw">#madewithrokoko</a> <a href="https://twitter.com/hashtag/unrealengine?src=hash&amp;ref_src=twsrc%5Etfw">#unrealengine</a> <a href="https://twitter.com/hashtag/ue5?src=hash&amp;ref_src=twsrc%5Etfw">#ue5</a> <a href="https://t.co/5hgXuUKVwR">pic.twitter.com/5hgXuUKVwR</a></p>&mdash; Rokoko (@hellorokoko) <a href="https://twitter.com/hellorokoko/status/1537795903356129281?ref_src=twsrc%5Etfw">June 17, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I created some <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> characters based on my <a href="https://twitter.com/hashtag/DazStudio?src=hash&amp;ref_src=twsrc%5Etfw">#DazStudio</a> characters Alita and Eren! It&#39;s so fun! <a href="https://twitter.com/EpicGames?ref_src=twsrc%5Etfw">@EpicGames</a> <a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@UnrealEngine</a> <a href="https://t.co/DNAwJ9ByID">pic.twitter.com/DNAwJ9ByID</a></p>&mdash; MoonscapeGraphics (@retro_devil) <a href="https://twitter.com/retro_devil/status/1537516230684319746?ref_src=twsrc%5Etfw">June 16, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">To do this import a model with the Metahuman plugin enabled (it&#39;s free) and create an identity asset. Select Component From Mesh and select your mesh. Frame it up nicely and right click the bottom and click &quot;Track Markers&quot;. Clean them up as required. <a href="https://t.co/hs1fGI9o9j">pic.twitter.com/hs1fGI9o9j</a></p>&mdash; Chris Murphy (@HighlySpammable) <a href="https://twitter.com/HighlySpammable/status/1537298905687539713?ref_src=twsrc%5Etfw">June 16, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I made emperor <a href="https://twitter.com/hashtag/Trajan?src=hash&amp;ref_src=twsrc%5Etfw">#Trajan</a> as a living human being, using <a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@unrealengine</a> Metahuman creator. <br><br>Using <a href="https://twitter.com/UffiziGalleries?ref_src=twsrc%5Etfw">@UffiziGalleries</a> bust of Trajan. <a href="https://twitter.com/hashtag/rome?src=hash&amp;ref_src=twsrc%5Etfw">#rome</a>  <a href="https://twitter.com/hashtag/emperor?src=hash&amp;ref_src=twsrc%5Etfw">#emperor</a> <a href="https://twitter.com/hashtag/romanarchaeology?src=hash&amp;ref_src=twsrc%5Etfw">#romanarchaeology</a> <a href="https://twitter.com/hashtag/Metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#Metahuman</a> <a href="https://twitter.com/hashtag/metahumancreator?src=hash&amp;ref_src=twsrc%5Etfw">#metahumancreator</a> <a href="https://twitter.com/hashtag/photoscan?src=hash&amp;ref_src=twsrc%5Etfw">#photoscan</a> <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/History?src=hash&amp;ref_src=twsrc%5Etfw">#History</a> <a href="https://twitter.com/hashtag/antiquity?src=hash&amp;ref_src=twsrc%5Etfw">#antiquity</a> <a href="https://twitter.com/hashtag/romanhistory?src=hash&amp;ref_src=twsrc%5Etfw">#romanhistory</a> <a href="https://t.co/i3UpCIghp4">pic.twitter.com/i3UpCIghp4</a></p>&mdash; Elias Artista 🇺🇦 🇨🇦 (@artista_elias) <a href="https://twitter.com/artista_elias/status/1537154696196067328?ref_src=twsrc%5Etfw">June 15, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">After yesterday’s experiment with <a href="https://twitter.com/hashtag/UnrealEngine?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine</a>’s <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a>, I wanted to try <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/LiveLink?src=hash&amp;ref_src=twsrc%5Etfw">#LiveLink</a> in order to animate my <a href="https://twitter.com/hashtag/MetaManu?src=hash&amp;ref_src=twsrc%5Etfw">#MetaManu</a> <a href="https://twitter.com/hashtag/DigitalTwin?src=hash&amp;ref_src=twsrc%5Etfw">#DigitalTwin</a> in <a href="https://twitter.com/hashtag/RealTime3D?src=hash&amp;ref_src=twsrc%5Etfw">#RealTime3D</a> using my phone’s camera. I also included some high quality animations from <a href="https://twitter.com/hashtag/MetaHumanCreator?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHumanCreator</a>. cc <a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@UnrealEngine</a> <a href="https://t.co/lP0p6mNfFm">pic.twitter.com/lP0p6mNfFm</a></p>&mdash; Manu.Vision (@ManuVision) <a href="https://twitter.com/ManuVision/status/1537146252739198976?ref_src=twsrc%5Etfw">June 15, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I followed in the footsteps of many others  and tested Mesh to MetaHuman in <a href="https://twitter.com/hashtag/UnrealEngine5?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine5</a>.<br><br>A quick 🧵 on the process: <a href="https://t.co/WqEeWM59HP">pic.twitter.com/WqEeWM59HP</a></p>&mdash; metamike (@itsmetamike) <a href="https://twitter.com/itsmetamike/status/1537111016302968832?ref_src=twsrc%5Etfw">June 15, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">玩一下MetaHuman <a href="https://t.co/5fweX7V3xi">pic.twitter.com/5fweX7V3xi</a></p>&mdash; MaxNuke (@Max_Nuke) <a href="https://twitter.com/Max_Nuke/status/1536896628379877376?ref_src=twsrc%5Etfw">June 15, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">人の顔の3Dモデルベースでスーパーフォトリアルなアバター作れるMetahumanの新しい機能を使って、エジプト博物館にあるネフェルティティ胸像の3DモデルからMetahuman作ってるのとても良い。ファラオの嫁が生き返った<br><br> <a href="https://t.co/nw2xjDzwd2">pic.twitter.com/nw2xjDzwd2</a></p>&mdash; Falcon ◇ メタバース・XR (@makotofalcon) <a href="https://twitter.com/makotofalcon/status/1536867670435725313?ref_src=twsrc%5Etfw">June 15, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Nefertiti as a <a href="https://twitter.com/hashtag/Metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#Metahuman</a>. I was curious to test the tools; wild stuff. <br>(3D Scan cleanup in <a href="https://twitter.com/hashtag/blender?src=hash&amp;ref_src=twsrc%5Etfw">#blender</a>, followed by <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> &amp; <a href="https://twitter.com/hashtag/metahumancreator?src=hash&amp;ref_src=twsrc%5Etfw">#metahumancreator</a> .)  <br><br>Original Berlin Neues Museum source scans available online :  <a href="https://t.co/ZFwsRKxdgP">https://t.co/ZFwsRKxdgP</a> <a href="https://t.co/9ZOFlqXH3B">pic.twitter.com/9ZOFlqXH3B</a></p>&mdash; Jason Bennett (@B0B0S0N) <a href="https://twitter.com/B0B0S0N/status/1536512668839862272?ref_src=twsrc%5Etfw">June 14, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">試さざるを得なかったScan to MetaHuman <a href="https://t.co/dHKSLjSPgO">pic.twitter.com/dHKSLjSPgO</a></p>&mdash; スキャンソン / CHP (@scanson3) <a href="https://twitter.com/scanson3/status/1536508350305046528?ref_src=twsrc%5Etfw">June 14, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="es" dir="ltr">Clonando a Ellie en <a href="https://twitter.com/hashtag/UnrealEngine?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine</a> <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> <a href="https://twitter.com/hashtag/efxtivostudio?src=hash&amp;ref_src=twsrc%5Etfw">#efxtivostudio</a> <a href="https://t.co/mzrFofnji4">pic.twitter.com/mzrFofnji4</a></p>&mdash; efxtivo (@efxtivo) <a href="https://twitter.com/efxtivo/status/1536286432079364096?ref_src=twsrc%5Etfw">June 13, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="in" dir="ltr">Tommy Vercetti <br>Unreal Engine 5 x MetaHuman <br>Mesh to Metahuman system is kinda scary <a href="https://t.co/SjwKP7AiNE">pic.twitter.com/SjwKP7AiNE</a></p>&mdash; WeeGee. (@WizzyWage) <a href="https://twitter.com/WizzyWage/status/1536246549524762624?ref_src=twsrc%5Etfw">June 13, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Niko Bellic <br>Unreal Engine x MetaHuman <br>first attempt at mesh import not bad <a href="https://t.co/zBLl55mQ1k">pic.twitter.com/zBLl55mQ1k</a></p>&mdash; WeeGee. (@WizzyWage) <a href="https://twitter.com/WizzyWage/status/1536238670436507649?ref_src=twsrc%5Etfw">June 13, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I have rendered Ceasar unto Metahuman. Using a scan created by the The British Museum and doing some adjustments in zbrush. <a href="https://twitter.com/hashtag/metahumans?src=hash&amp;ref_src=twsrc%5Etfw">#metahumans</a> <a href="https://twitter.com/hashtag/sketchfab?src=hash&amp;ref_src=twsrc%5Etfw">#sketchfab</a> <a href="https://twitter.com/hashtag/Epic?src=hash&amp;ref_src=twsrc%5Etfw">#Epic</a> <a href="https://twitter.com/hashtag/UnrealEngine?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine</a> <a href="https://twitter.com/hashtag/zbrush?src=hash&amp;ref_src=twsrc%5Etfw">#zbrush</a> <a href="https://t.co/2ux5kdKQzn">pic.twitter.com/2ux5kdKQzn</a></p>&mdash; Vertices UVs normals polygon stuff. (@JustinMapes) <a href="https://twitter.com/JustinMapes/status/1536089956204019713?ref_src=twsrc%5Etfw">June 12, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I have tested Mesh to Metahuman Plugin again starting from a mesh created with photogrammetry. I think now it&#39;s starting to look more like my head. Now it&#39;s time to work on the details 😎 <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/UnrealEngine5?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine5</a> <a href="https://twitter.com/hashtag/CGI?src=hash&amp;ref_src=twsrc%5Etfw">#CGI</a> <a href="https://twitter.com/hashtag/metahumans?src=hash&amp;ref_src=twsrc%5Etfw">#metahumans</a> <a href="https://t.co/TpzIxljR9w">pic.twitter.com/TpzIxljR9w</a></p>&mdash; Ricardo González (@ricardogonsan) <a href="https://twitter.com/ricardogonsan/status/1536029660550668297?ref_src=twsrc%5Etfw">June 12, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="in" dir="ltr">UE5 Mesh to Metahuman Testing ...<a href="https://t.co/psYuPn0jF9">https://t.co/psYuPn0jF9</a><a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> <a href="https://twitter.com/hashtag/epic?src=hash&amp;ref_src=twsrc%5Etfw">#epic</a> <a href="https://twitter.com/hashtag/UnrealEngine?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine</a> <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://t.co/RnfuGpmTh9">pic.twitter.com/RnfuGpmTh9</a></p>&mdash; Bao Le (@_xmasjazzy_) <a href="https://twitter.com/_xmasjazzy_/status/1536011142682017792?ref_src=twsrc%5Etfw">June 12, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">MetaHuman 専用 元メッシュ<br>唇は上下で別色。ほうれい線も色分け<br>単色なので、UE5で「ライティングあり」でトラッキングするとライン修正ほぼナシでいけた。 <a href="https://t.co/cEZfJPLKoD">pic.twitter.com/cEZfJPLKoD</a></p>&mdash; h64g (@h64g_) <a href="https://twitter.com/h64g_/status/1535905202787606529?ref_src=twsrc%5Etfw">June 12, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Scan to MetaHuman Tutorial for Unreal Engine 5 <a href="https://t.co/VgJAwrqgNf">https://t.co/VgJAwrqgNf</a></p>&mdash; Ka2studio (@Ka2_Studio) <a href="https://twitter.com/Ka2_Studio/status/1535890817507803136?ref_src=twsrc%5Etfw">June 12, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr"><a href="https://twitter.com/hashtag/scarlettjohansson?src=hash&amp;ref_src=twsrc%5Etfw">#scarlettjohansson</a> with another haircut in <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@UnrealEngine</a> <a href="https://t.co/tyuQ67vLn2">pic.twitter.com/tyuQ67vLn2</a></p>&mdash; AFredenucci (@afredenucci_) <a href="https://twitter.com/afredenucci_/status/1535781322647805952?ref_src=twsrc%5Etfw">June 12, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">my old low poly character in <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> <a href="https://twitter.com/hashtag/ue5?src=hash&amp;ref_src=twsrc%5Etfw">#ue5</a> <a href="https://t.co/rsHJqDK1RM">pic.twitter.com/rsHJqDK1RM</a></p>&mdash; 3d rat (@3dRatte) <a href="https://twitter.com/3dRatte/status/1535703698789347330?ref_src=twsrc%5Etfw">June 11, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">me, converted to an Unreal Engine Metahuman. It&#39;ll be better if I make a custom head hair groom, and glasses. <a href="https://twitter.com/hashtag/UnrealEngine5?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine5</a> <a href="https://t.co/v7EtbYVxi3">pic.twitter.com/v7EtbYVxi3</a></p>&mdash; Bert Huntsinger (@amethyst_videos) <a href="https://twitter.com/amethyst_videos/status/1535700489467310080?ref_src=twsrc%5Etfw">June 11, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="fr" dir="ltr">Mesh to <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a>, J&#39;ai effectue mon petit test<br>Je trouve ca sympa. Dans mon cas je ne suis pas parti d&#39;un scan, mais d&#39;un sculpt zbrush d&#39;une statue. Ca retient certain trait du visage mais vraiment pas tout. Globalement je trouve ca plutot bien.<br>Vous savez qui est ce ? <a href="https://t.co/LNzo6Vv2FJ">pic.twitter.com/LNzo6Vv2FJ</a></p>&mdash; Fred Unreal Zone #UE5 (@fred_unreal) <a href="https://twitter.com/fred_unreal/status/1535667242653859841?ref_src=twsrc%5Etfw">June 11, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">OMG 😱 mesh to <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> supports imported head scans for <a href="https://twitter.com/hashtag/ue5?src=hash&amp;ref_src=twsrc%5Etfw">#ue5</a> <a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@UnrealEngine</a> <a href="https://twitter.com/quixeltools?ref_src=twsrc%5Etfw">@quixeltools</a> <a href="https://t.co/9dRwzLeywU">pic.twitter.com/9dRwzLeywU</a></p>&mdash; Don Allen Stevenson III (@DonAllenIII) <a href="https://twitter.com/DonAllenIII/status/1535633121055346688?ref_src=twsrc%5Etfw">June 11, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">Mesh to metahumanで古いモデルが無事にMetahumanに変換された。ある程度デフォルメされたモデルも意外といけるが、目の大きさや顔のシルエットなど限界があるらしい。<a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://t.co/GLvSVa0Zoi">pic.twitter.com/GLvSVa0Zoi</a></p>&mdash; LEV (@lev978) <a href="https://twitter.com/lev978/status/1535612430323048449?ref_src=twsrc%5Etfw">June 11, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ht" dir="ltr">Metahooman<a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://twitter.com/hashtag/3dart?src=hash&amp;ref_src=twsrc%5Etfw">#3dart</a> <a href="https://t.co/ZsqCQ4GhWn">pic.twitter.com/ZsqCQ4GhWn</a></p>&mdash; Emmanuel Galdones (@BlobEmman) <a href="https://twitter.com/BlobEmman/status/1535603782691995648?ref_src=twsrc%5Etfw">June 11, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">So, the new mesh to <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> plugin was able to transfer my character&#39;s ears and the shape of the eyebrows flawlessly. Here you can see the original mesh and the trackers:<a href="https://twitter.com/hashtag/3dart?src=hash&amp;ref_src=twsrc%5Etfw">#3dart</a>  <a href="https://twitter.com/hashtag/UnrealEngine5?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine5</a> <a href="https://twitter.com/hashtag/ue5?src=hash&amp;ref_src=twsrc%5Etfw">#ue5</a> <a href="https://t.co/5qA97XmuCh">pic.twitter.com/5qA97XmuCh</a></p>&mdash; André M. (@AndreMailho) <a href="https://twitter.com/AndreMailho/status/1535603763980935168?ref_src=twsrc%5Etfw">June 11, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Queen Nefertiti based from the sculpture of the Egyptian Museum of Berlin. <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://twitter.com/hashtag/Metaverse?src=hash&amp;ref_src=twsrc%5Etfw">#Metaverse</a> <a href="https://twitter.com/hashtag/UnrealEngine?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine</a> <a href="https://twitter.com/hashtag/3dart?src=hash&amp;ref_src=twsrc%5Etfw">#3dart</a> <a href="https://twitter.com/hashtag/gamedev?src=hash&amp;ref_src=twsrc%5Etfw">#gamedev</a> <a href="https://t.co/GUyfcptrjq">pic.twitter.com/GUyfcptrjq</a></p>&mdash; RunJumpFilms (@runjumpfilms) <a href="https://twitter.com/runjumpfilms/status/1535597905041666049?ref_src=twsrc%5Etfw">June 11, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="in" dir="ltr">Mesh to Metahuman in <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/ObscureNerdVR?ref_src=twsrc%5Etfw">@ObscureNerdVR</a> <a href="https://twitter.com/wandduel?ref_src=twsrc%5Etfw">@wandduel</a> <a href="https://t.co/VI0KMgUc1X">pic.twitter.com/VI0KMgUc1X</a></p>&mdash; Pratik Suketu (@pratiksuketu) <a href="https://twitter.com/pratiksuketu/status/1535466164876242944?ref_src=twsrc%5Etfw">June 11, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">I used this to make Gman into a Metahuman and this is what I got lmao <a href="https://t.co/44dJP9q76j">https://t.co/44dJP9q76j</a> <a href="https://t.co/yBMKcEGBEU">pic.twitter.com/yBMKcEGBEU</a></p>&mdash; TurboDumpster 16 (@TrashHeap64) <a href="https://twitter.com/TrashHeap64/status/1535327591950954498?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ko" dir="ltr">이번에 발표된 UE5의 Mesh to Metahuman 기능을 이용해서 기존에 내가 만든 모델링을 Metahuman으로 만들어봤는데 아주 잘 작동한다.<br>좀더 후처리 파라메터가 있으면 좋겠다는 생각이 들지만 아직 현재 진행형으로 발전 중인 툴이니까 전혀 문제되지 않고.<a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://t.co/Sz5lI5WOdv">pic.twitter.com/Sz5lI5WOdv</a></p>&mdash; 한대훈 / Daehoon Han (@Hanguny) <a href="https://twitter.com/Hanguny/status/1535244007349305344?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">New custom Mesh to Metahuman example in Unreal. <br><br>Song: &quot;Bezos IV&quot; by Bo Burnham <a href="https://t.co/9lJy1E6c66">pic.twitter.com/9lJy1E6c66</a></p>&mdash; Brielle Garcia (47%) (@tacolamp) <a href="https://twitter.com/tacolamp/status/1535228309428051968?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">The latest UE5 Metahuman Creator update is insane.<br><br>I can&#39;t wait to use this tech in future projects! <a href="https://t.co/R3uOpYpMlv">pic.twitter.com/R3uOpYpMlv</a></p>&mdash; Cinematic Captures (@CineCaptures) <a href="https://twitter.com/CineCaptures/status/1535195217153839104?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">1-2-3-done. Have fun with the creator. <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://twitter.com/hashtag/UnrealEngine5?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine5</a> <a href="https://twitter.com/hashtag/Metaverse?src=hash&amp;ref_src=twsrc%5Etfw">#Metaverse</a> <a href="https://t.co/h1yxmeJsFD">pic.twitter.com/h1yxmeJsFD</a></p>&mdash; 我的星系是金牛座 (@iamfromtaurus) <a href="https://twitter.com/iamfromtaurus/status/1535150914218360832?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</p>
+<h2 id="youtube">YouTube</h2>
+<p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/FMpx1nqsltQ" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/FWlgiuURrTA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/g7BgPJ93UpI" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/-0uKerqld6g" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/VXjnX5dG-t4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/xo-C-SBDSbU" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/WruMxFwHcf8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/FCrkrni5B4E" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/AiNKsZ1B5vA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/MijEKbawToo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/QMO3GcTxlD4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/syjsUshN2KY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/no3wvt8S7E4" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/fM3SAyD7DR8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/GP6HV-umI0Q" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/QCHNs6viatc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/p_Jplwje5cA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/CqgZEece02k" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/8mj_i_E4Jzw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/IxCK8pis2c8" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/mr2Hlhp5dhw" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/FRrckmxGxxk" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/PyD7teiaJKA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/Ah2qljDNGTA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/B0dqtZUnG38" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/ldC6K-NBo4M" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/uVRp87dLUqc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/ZxyCxfUaBJo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/XvAFqe2PgFE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/UrYV3D2RX4w" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/n4kC_iu5cMg" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/J6o1X32WCP0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/YHlmSxA7Myc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/iTOf8xOGL9c" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/d_s_w6nT5ho" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/eYF-ezNjjVE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/EWNrAYhT0Oc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/bsV31gS7Zxo" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/ui14WcE2Z_I" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/lw3YGCF6m3U" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/EswgAEmdULE" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</p>
+<h2 id="terrifying-results">Terrifying results</h2>
+<p><blockquote class="twitter-tweet"><p lang="en" dir="ltr">{3D} Check out this work from <a href="https://twitter.com/leslievdb?ref_src=twsrc%5Etfw">@leslievdb</a>! The metahuman creator looks so cool! <a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@UnrealEngine</a> <a href="https://twitter.com/hashtag/MetaHumanCreator?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHumanCreator</a> <a href="https://twitter.com/hashtag/metahumans?src=hash&amp;ref_src=twsrc%5Etfw">#metahumans</a> <a href="https://t.co/K3FSvnU2CX">https://t.co/K3FSvnU2CX</a></p>&mdash; BGMcClung (@BGMcClung) <a href="https://twitter.com/BGMcClung/status/1536196339087945730?ref_src=twsrc%5Etfw">June 13, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">メッシュからメタヒューマンを作れるツールMesh to MetaHumanができたのでローポリアニメキャラで試してみた。　😦😦閲覧注意😦😦<a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/Metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#Metahuman</a> <a href="https://twitter.com/hashtag/%E3%83%AD%E3%83%BC%E3%83%9D%E3%83%AA?src=hash&amp;ref_src=twsrc%5Etfw">#ローポリ</a> <a href="https://twitter.com/hashtag/%E3%83%9B%E3%83%A9%E3%83%BC?src=hash&amp;ref_src=twsrc%5Etfw">#ホラー</a> <a href="https://t.co/mQRKxNdotv">pic.twitter.com/mQRKxNdotv</a></p>&mdash; mariaric (@Mariaticmat) <a href="https://twitter.com/Mariaticmat/status/1534944117511573505?ref_src=twsrc%5Etfw">June 9, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Ummmm much too fun bringing in a janky mesh and <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> doing the rest <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://t.co/96gEHlHPUv">pic.twitter.com/96gEHlHPUv</a></p>&mdash; Ryan Corniel (@DukeGunston) <a href="https://twitter.com/DukeGunston/status/1535160515759992833?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">うわーい！自分のモデルをMetaHumanにできたー！<a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://t.co/DYrudbQSb2">pic.twitter.com/DYrudbQSb2</a></p>&mdash; くろさわ (@kurosaurus) <a href="https://twitter.com/kurosaurus/status/1535140218453786624?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">耳も後頭部も無い、鼻の長い天狗のお面でできたMetahumanがこれ!🫣<a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://t.co/3tq0ymO4KN">pic.twitter.com/3tq0ymO4KN</a></p>&mdash; wajyuu (@wajyuu2) <a href="https://twitter.com/wajyuu2/status/1535183434779201536?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Starting a new metahuman with a 3D scan of my front face only was not a good idea… <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> <a href="https://twitter.com/hashtag/UnrealEngine5?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine5</a> <a href="https://t.co/TJILgnlnsc">pic.twitter.com/TJILgnlnsc</a></p>&mdash; Neoyume (@neoyume) <a href="https://twitter.com/neoyume/status/1535094531146010624?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">It&#39;s me, merio<a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@UnrealEngine</a><br> <a href="https://twitter.com/quixeltools?ref_src=twsrc%5Etfw">@quixeltools</a><br> <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/UnrealEngine?src=hash&amp;ref_src=twsrc%5Etfw">#UnrealEngine</a> <a href="https://twitter.com/hashtag/unreal?src=hash&amp;ref_src=twsrc%5Etfw">#unreal</a> <a href="https://twitter.com/hashtag/metahumancreator?src=hash&amp;ref_src=twsrc%5Etfw">#metahumancreator</a> <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> <a href="https://twitter.com/hashtag/Mario?src=hash&amp;ref_src=twsrc%5Etfw">#Mario</a> <a href="https://t.co/dwDkAxX4x5">pic.twitter.com/dwDkAxX4x5</a></p>&mdash; EXpMiNi (@EXpMiNi) <a href="https://twitter.com/EXpMiNi/status/1535034864021700608?ref_src=twsrc%5Etfw">June 9, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">自分のMetaHuman作りたかったので、MetaHuman Pluginを早速おためし。<a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://t.co/ol9UxHRgEw">pic.twitter.com/ol9UxHRgEw</a></p>&mdash; ovjang (@followapp) <a href="https://twitter.com/followapp/status/1535238457542705152?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Everyone is super hype on the new <a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> scan data to mesh plugin update... but no one told LV that he probably shouldn&#39;t try it... <a href="https://twitter.com/hashtag/ue5?src=hash&amp;ref_src=twsrc%5Etfw">#ue5</a> <a href="https://twitter.com/hashtag/nightmarefuel?src=hash&amp;ref_src=twsrc%5Etfw">#nightmarefuel</a> <a href="https://t.co/ifzY1V8jNq">pic.twitter.com/ifzY1V8jNq</a></p>&mdash; Steve Teeps (@Steveteeps) <a href="https://twitter.com/Steveteeps/status/1535392708784664576?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="ja" dir="ltr">mesh to metahuman最高にいいキャラクターモデリングツールだよね。動物もできそうだし🙄<br>トラッカーがもっと楽に操作できると使いやすいけど。<br>シンメトリーに自動でしてくれるツールと、トラッカーのGRSマニピュレート操作ができるようにしてほしいな　<a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/Metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#Metahuman</a> <a href="https://t.co/1khKvpmoyD">pic.twitter.com/1khKvpmoyD</a></p>&mdash; mariaric (@Mariaticmat) <a href="https://twitter.com/Mariaticmat/status/1538081984962265088?ref_src=twsrc%5Etfw">June 18, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">well, still a lot of stuff to do manually, this tool is not a magic pill, but it does dirty routine job that took hours and days in a second. Feels like miracle<a href="https://twitter.com/hashtag/metahuman?src=hash&amp;ref_src=twsrc%5Etfw">#metahuman</a> <a href="https://twitter.com/hashtag/ue5?src=hash&amp;ref_src=twsrc%5Etfw">#ue5</a> <a href="https://t.co/pL5XGrw3pJ">pic.twitter.com/pL5XGrw3pJ</a></p>&mdash; Zarkua (@artzarkua) <a href="https://twitter.com/artzarkua/status/1538057634489806849?ref_src=twsrc%5Etfw">June 18, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Yeah, Metahuman creator from <a href="https://twitter.com/UnrealEngine?ref_src=twsrc%5Etfw">@UnrealEngine</a> is working great!! <a href="https://t.co/Mz8d6UHAqa">pic.twitter.com/Mz8d6UHAqa</a></p>&mdash; Kino Bar (@KinoBar2) <a href="https://twitter.com/KinoBar2/status/1536100560444829698?ref_src=twsrc%5Etfw">June 12, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Unlocked the ET feature in Metahuman Creator 😁 <a href="https://twitter.com/hashtag/madewithunreal?src=hash&amp;ref_src=twsrc%5Etfw">#madewithunreal</a> <a href="https://twitter.com/EpicNinaWard?ref_src=twsrc%5Etfw">@EpicNinaWard</a> <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> <a href="https://twitter.com/hashtag/UE5Study?src=hash&amp;ref_src=twsrc%5Etfw">#UE5Study</a> <a href="https://t.co/MMtjyy1Jmm">pic.twitter.com/MMtjyy1Jmm</a></p>&mdash; Unreal N00b (@HoobTall) <a href="https://twitter.com/HoobTall/status/1535322580965416960?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Metahuman new features is insane! <a href="https://t.co/7yT9OpDLMd">pic.twitter.com/7yT9OpDLMd</a></p>&mdash; Qi Wu (@migo1942) <a href="https://twitter.com/migo1942/status/1535308702617636872?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">Ummmm much too fun bringing in a janky mesh and <a href="https://twitter.com/hashtag/UE5?src=hash&amp;ref_src=twsrc%5Etfw">#UE5</a> doing the rest <a href="https://twitter.com/hashtag/MetaHuman?src=hash&amp;ref_src=twsrc%5Etfw">#MetaHuman</a> <a href="https://t.co/96gEHlHPUv">pic.twitter.com/96gEHlHPUv</a></p>&mdash; Ryan Corniel (@DukeGunston) <a href="https://twitter.com/DukeGunston/status/1535160515759992833?ref_src=twsrc%5Etfw">June 10, 2022</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</p>
+<h2 id="tutorials">Tutorials</h2>
+<p>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/8JVWGb9kBng" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/xFk_WU32igA" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/OadO1Gsyql0" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/7Av0L4bhrXY" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+  <iframe src="https://www.youtube.com/embed/soWuiE06SEc" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; border:0;" allowfullscreen title="YouTube Video"></iframe>
+</div>
+</p>
+
+    </div>
+</article>
+
+
+
+
+            </div>
+            <aside class="col-12 col-md-3 float-left sidebar">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/mcleary" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/tluisrs" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://www.youtube.com/channel/UCFZCPq--PwSkfVkkRsRUUqQ" target="_blank"><span>YouTube</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/assets/">Assets</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gamedev/">GameDev</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gpgpu/">GPGPU</a>
+            </span>
+            
+            <span>
+                <a href="/tags/lumen/">Lumen</a>
+            </span>
+            
+            <span>
+                <a href="/tags/memory/">memory</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mesh-to-metahuman/">Mesh to MetaHuman</a>
+            </span>
+            
+            <span>
+                <a href="/tags/metahuman/">MetaHuman</a>
+            </span>
+            
+            <span>
+                <a href="/tags/rendering/">Rendering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ue4/">UE4</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ue5/">UE5</a>
+            </span>
+            
+            <span>
+                <a href="/tags/unreal-engine/">Unreal Engine</a>
+            </span>
+            
+            <span>
+                <a href="/tags/unreal-engine-5/">Unreal Engine 5</a>
+            </span>
+            
+            <span>
+                <a href="/tags/vulkan/">vulkan</a>
+            </span>
+            
+            <span>
+                <a href="/tags/vulkan-compute/">vulkan-compute</a>
+            </span>
+            
+        </div>
+    </div>
+    <div class="sidebar-item sidebar-toc">
+        <h3>Table of Contents</h3><nav id="TableOfContents">
+  <ul>
+    <li><a href="#official-documentation">Official Documentation</a></li>
+    <li><a href="#press-coverage">Press Coverage</a></li>
+    <li><a href="#twitter">Twitter</a></li>
+    <li><a href="#youtube">YouTube</a></li>
+    <li><a href="#terrifying-results">Terrifying results</a></li>
+    <li><a href="#tutorials">Tutorials</a></li>
+  </ul>
+</nav></div>
+</aside>
+
+        </div>
+        <div class="btn">
+    <div class="btn-menu" id="btn-menu">
+        <i class="iconfont icon-grid-sharp"></i>
+    </div>
+    <div class="btn-toggle-mode">
+        <i class="iconfont icon-contrast-sharp"></i>
+    </div>
+    <div class="btn-scroll-top">
+        <i class="iconfont icon-chevron-up-circle-sharp"></i>
+    </div>
+</div>
+<aside class="sidebar-mobile" style="display: none;">
+  <div class="sidebar-wrapper">
+    
+    <div class="sidebar-item sidebar-pages">
+        <h3>Pages</h3>
+        <ul>
+            
+            <li>
+                <a href="/">Home</a>
+            </li>
+            
+            <li>
+                <a href="/about/">About</a>
+            </li>
+            
+            <li>
+                <a href="/search/">Search</a>
+            </li>
+            
+            <li>
+                <a href="/index.xml">RSS</a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-links">
+        <h3>Links</h3>
+        <ul>
+            
+            <li>
+                <a href="https://github.com/mcleary" target="_blank"><span>GitHub</span></a>
+            </li>
+            
+            <li>
+                <a href="https://twitter.com/tluisrs" target="_blank"><span>Twitter</span></a>
+            </li>
+            
+            <li>
+                <a href="https://www.youtube.com/channel/UCFZCPq--PwSkfVkkRsRUUqQ" target="_blank"><span>YouTube</span></a>
+            </li>
+            
+        </ul>
+    </div>
+    
+    <div class="sidebar-item sidebar-tags">
+        <h3>Tags</h3>
+        <div>
+            
+            <span>
+                <a href="/tags/assets/">Assets</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gamedev/">GameDev</a>
+            </span>
+            
+            <span>
+                <a href="/tags/gpgpu/">GPGPU</a>
+            </span>
+            
+            <span>
+                <a href="/tags/lumen/">Lumen</a>
+            </span>
+            
+            <span>
+                <a href="/tags/memory/">memory</a>
+            </span>
+            
+            <span>
+                <a href="/tags/mesh-to-metahuman/">Mesh to MetaHuman</a>
+            </span>
+            
+            <span>
+                <a href="/tags/metahuman/">MetaHuman</a>
+            </span>
+            
+            <span>
+                <a href="/tags/rendering/">Rendering</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ue4/">UE4</a>
+            </span>
+            
+            <span>
+                <a href="/tags/ue5/">UE5</a>
+            </span>
+            
+            <span>
+                <a href="/tags/unreal-engine/">Unreal Engine</a>
+            </span>
+            
+            <span>
+                <a href="/tags/unreal-engine-5/">Unreal Engine 5</a>
+            </span>
+            
+            <span>
+                <a href="/tags/vulkan/">vulkan</a>
+            </span>
+            
+            <span>
+                <a href="/tags/vulkan-compute/">vulkan-compute</a>
+            </span>
+            
+        </div>
+    </div>
+    
+    
+    
+    
+  </div>
+</aside>
+    </main>
+
+    <footer>
+    <div class="container-lg clearfix">
+        <div class="col-12 footer">
+            
+            <span>&copy; 2022
+                <a href="https://mcleary.github.io">Thales Sabino</a>
+                
+                | Powered by <a href="https://github.com/dsrkafuu/hugo-theme-fuji/"
+                   target="_blank">Fuji-v2</a> &amp; <a href="https://gohugo.io/"
+                                                    target="_blank">Hugo</a> 
+            </span>
+        </div>
+    </div>
+</footer>
+
+    
+<script defer src="https://cdn.jsdelivr.net/npm/medium-zoom@1.0.6/dist/medium-zoom.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/components/prism-core.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.23.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+
+
+<script defer src="/assets/js/fuji.min.js"></script>
+
+
+
+</body>
+
+</html>

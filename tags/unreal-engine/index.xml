@@ -6,7 +6,17 @@
     <description>Recent content in Unreal Engine on Baked Bits</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 29 Apr 2022 14:37:14 +0100</lastBuildDate><atom:link href="https://mcleary.github.io/tags/unreal-engine/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 18 Jun 2022 20:33:32 +0100</lastBuildDate><atom:link href="https://mcleary.github.io/tags/unreal-engine/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Mesh to MetaHuman Gallery</title>
+      <link>https://mcleary.github.io/posts/mesh-to-metahuman-gallery/</link>
+      <pubDate>Sat, 18 Jun 2022 20:33:32 +0100</pubDate>
+      
+      <guid>https://mcleary.github.io/posts/mesh-to-metahuman-gallery/</guid>
+      <description>Mesh to MetaHuman Gallery A collection of MetaHumans created using the new Mesh to MetaHuman tool in the new MetaHuman Plugin for Unreal Engine 5
+Official Documentation  Mesh to MetaHuman Mesh to MetaHuman Quick Start       Press Coverage  fxGuide: Huge update for MetaHuman : Import your own head! AWN: Unreal Engine Mesh to MetaHuman Plugin Now Available 80.tv: Epic Games&#39; New Release Brings a Mesh to MetaHuman Feature to UE GameFromScratch: Make Your Own MetaHuman in Unreal Engine 5 CGPress: Epic updated Metahuman with ability to import custom character meshes  Twitter Turning Buddha into a #MetaHuman using the new MetaHuman plugin for Unreal Engine 5 #UnrealEngine5 #MeshToMetaHuman pic.</description>
+    </item>
+    
     <item>
       <title>Modern Sponza UE5</title>
       <link>https://mcleary.github.io/posts/modern-sponza-ue5/</link>
