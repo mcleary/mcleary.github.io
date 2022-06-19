@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.92.0" />
+<meta name="generator" content="Hugo 0.101.0" />
 
 
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/dsrkafuu/dsr-cdn-main@1/images/favicons/dsrca.ico" />
@@ -119,14 +119,14 @@
   <div class="post-item post-meta">
     <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-08-22</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;721 words</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;722 words</span>
 <span><i class="iconfont icon-time-sharp"></i>&nbsp;4 minutes</span>
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/vulkan">vulkan</a>&nbsp;<a href="/tags/vulkan-compute">vulkan-compute</a>&nbsp;<a href="/tags/gpgpu">GPGPU</a>&nbsp;<a href="/tags/memory">memory</a>&nbsp;</span>
 
   </div>
   <div class="post-item post-summary markdown-body">
     In my post A Simple Vulkan Compute Example in C++ I described the hello world of Vulkan Compute. A very simple application that squares a vector of integers using a HLSL compute shader. It is quite an involved process, requiring many steps to be completed before getting to the actual compute shader execution. You need to:
- Create a Vulkan Instance, Physical Device, Logical Device Find the flags required to create a compute Queue Create the buffers that the shader will operate on:  Query the memory requirements for a particular buffer Find the index of the memory type to create the buffer from Allocate Memory for the buffers Map the memory and fill it with the data you want Bind the buffers to the memory   Create a Descriptor Set, Shader Module, Pipeline Create a Command Pool, Command Buffer, Fences Dispatch the shader Wait for completion Map the buffers and read the results back  It is a rather complex process just to run some program on your GPU.
+Create a Vulkan Instance, Physical Device, Logical Device Find the flags required to create a compute Queue Create the buffers that the shader will operate on: Query the memory requirements for a particular buffer Find the index of the memory type to create the buffer from Allocate Memory for the buffers Map the memory and fill it with the data you want Bind the buffers to the memory Create a Descriptor Set, Shader Module, Pipeline Create a Command Pool, Command Buffer, Fences Dispatch the shader Wait for completion Map the buffers and read the results back It is a rather complex process just to run some program on your GPU.
   </div>
 </div>
 

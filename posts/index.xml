@@ -13,8 +13,8 @@
       <pubDate>Sat, 18 Jun 2022 20:33:32 +0100</pubDate>
       
       <guid>https://mcleary.github.io/posts/mesh-to-metahuman-gallery/</guid>
-      <description>Mesh to MetaHuman Gallery A collection of MetaHumans created using the new Mesh to MetaHuman tool in the new MetaHuman Plugin for Unreal Engine 5
-Official Documentation  Mesh to MetaHuman Mesh to MetaHuman Quick Start       Press Coverage  fxGuide: Huge update for MetaHuman : Import your own head! AWN: Unreal Engine Mesh to MetaHuman Plugin Now Available 80.tv: Epic Games&#39; New Release Brings a Mesh to MetaHuman Feature to UE GameFromScratch: Make Your Own MetaHuman in Unreal Engine 5 CGPress: Epic updated Metahuman with ability to import custom character meshes  Twitter Turning Buddha into a #MetaHuman using the new MetaHuman plugin for Unreal Engine 5 #UnrealEngine5 #MeshToMetaHuman pic.</description>
+      <description>A collection of MetaHumans created using the new Mesh to MetaHuman tool in the new MetaHuman Plugin for Unreal Engine 5
+Official Documentation Mesh to MetaHuman Mesh to MetaHuman Quick Start Press Coverage fxGuide: Huge update for MetaHuman : Import your own head! AWN: Unreal Engine Mesh to MetaHuman Plugin Now Available 80.tv: Epic Games&amp;rsquo; New Release Brings a Mesh to MetaHuman Feature to UE GameFromScratch: Make Your Own MetaHuman in Unreal Engine 5 CGPress: Epic updated Metahuman with ability to import custom character meshes YouTube Twitter These take a while to load</description>
     </item>
     
     <item>
@@ -33,7 +33,7 @@ Official Documentation  Mesh to MetaHuman Mesh to MetaHuman Quick Start       Pr
       
       <guid>https://mcleary.github.io/posts/vulkan-memory-allocator/</guid>
       <description>In my post A Simple Vulkan Compute Example in C++ I described the hello world of Vulkan Compute. A very simple application that squares a vector of integers using a HLSL compute shader. It is quite an involved process, requiring many steps to be completed before getting to the actual compute shader execution. You need to:
- Create a Vulkan Instance, Physical Device, Logical Device Find the flags required to create a compute Queue Create the buffers that the shader will operate on:  Query the memory requirements for a particular buffer Find the index of the memory type to create the buffer from Allocate Memory for the buffers Map the memory and fill it with the data you want Bind the buffers to the memory   Create a Descriptor Set, Shader Module, Pipeline Create a Command Pool, Command Buffer, Fences Dispatch the shader Wait for completion Map the buffers and read the results back  It is a rather complex process just to run some program on your GPU.</description>
+Create a Vulkan Instance, Physical Device, Logical Device Find the flags required to create a compute Queue Create the buffers that the shader will operate on: Query the memory requirements for a particular buffer Find the index of the memory type to create the buffer from Allocate Memory for the buffers Map the memory and fill it with the data you want Bind the buffers to the memory Create a Descriptor Set, Shader Module, Pipeline Create a Command Pool, Command Buffer, Fences Dispatch the shader Wait for completion Map the buffers and read the results back It is a rather complex process just to run some program on your GPU.</description>
     </item>
     
     <item>

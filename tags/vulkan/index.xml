@@ -14,7 +14,7 @@
       
       <guid>https://mcleary.github.io/posts/vulkan-memory-allocator/</guid>
       <description>In my post A Simple Vulkan Compute Example in C++ I described the hello world of Vulkan Compute. A very simple application that squares a vector of integers using a HLSL compute shader. It is quite an involved process, requiring many steps to be completed before getting to the actual compute shader execution. You need to:
- Create a Vulkan Instance, Physical Device, Logical Device Find the flags required to create a compute Queue Create the buffers that the shader will operate on:  Query the memory requirements for a particular buffer Find the index of the memory type to create the buffer from Allocate Memory for the buffers Map the memory and fill it with the data you want Bind the buffers to the memory   Create a Descriptor Set, Shader Module, Pipeline Create a Command Pool, Command Buffer, Fences Dispatch the shader Wait for completion Map the buffers and read the results back  It is a rather complex process just to run some program on your GPU.</description>
+Create a Vulkan Instance, Physical Device, Logical Device Find the flags required to create a compute Queue Create the buffers that the shader will operate on: Query the memory requirements for a particular buffer Find the index of the memory type to create the buffer from Allocate Memory for the buffers Map the memory and fill it with the data you want Bind the buffers to the memory Create a Descriptor Set, Shader Module, Pipeline Create a Command Pool, Command Buffer, Fences Dispatch the shader Wait for completion Map the buffers and read the results back It is a rather complex process just to run some program on your GPU.</description>
     </item>
     
     <item>

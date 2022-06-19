@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta http-equiv="Cache-Control" content="no-transform" />
 <meta http-equiv="Cache-Control" content="no-siteapp" />
-<meta name="generator" content="Hugo 0.92.0" />
+<meta name="generator" content="Hugo 0.101.0" />
 
 
 <link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/dsrkafuu/dsr-cdn-main@1/images/favicons/dsrca.ico" />
@@ -117,7 +117,7 @@ Vulkan provides both a graphics and compute APIs and in this post I will focus o
     <div class="post-item post-meta">
         <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-07-07</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2474 words</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2483 words</span>
 <span><i class="iconfont icon-time-sharp"></i>&nbsp;12 minutes</span>
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/vulkan">vulkan</a>&nbsp;<a href="/tags/vulkan-compute">vulkan-compute</a>&nbsp;<a href="/tags/gpgpu">GPGPU</a>&nbsp;</span>
 
@@ -153,12 +153,12 @@ the resource management required to use Vulkan.</p>
 <p>The goal is simple: Run a compute shader that squares the numbers from an input buffer and
 stores the results in an output buffer, i.e., run the equivalent of the following code but
 in the GPU, using Vulkan:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> Input, Output;
-<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> I <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; I <span style="color:#f92672">&lt;</span> Input.size(); <span style="color:#f92672">++</span>I)
-{
-    Output[I] <span style="color:#f92672">=</span> Input[I] <span style="color:#f92672">*</span> Input[I];
-}
-</code></pre></div><p>So let&rsquo;s start writing this program.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int</span><span style="color:#f92672">&gt;</span> Input, Output;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int</span> I <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; I <span style="color:#f92672">&lt;</span> Input.size(); <span style="color:#f92672">++</span>I)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    Output[I] <span style="color:#f92672">=</span> Input[I] <span style="color:#f92672">*</span> Input[I];
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>So let&rsquo;s start writing this program.</p>
 <h2 id="infrastructure">Infrastructure</h2>
 <blockquote>
 <p>Make sure you have the <a href="https://vulkan.lunarg.com/" target="_blank">Vulkan SDK</a> installed on your machine.</p>
@@ -169,81 +169,81 @@ machine. For this program I&rsquo;m going to use CMake and HLSL for the shader p
 to SPIR-V ahead of time to make things simple in the C++ side. Using <code>add_custom_target</code>
 you can create a CMake target that will compile the <code>Square.hlsl</code> shader when building
 the project.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-cmake" data-lang="cmake">cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.16</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>project(<span style="color:#e6db74">VulkanCompute</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>find_package(<span style="color:#e6db74">Vulkan</span> <span style="color:#e6db74">REQUIRED</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>add_custom_command(
-    <span style="color:#e6db74">OUTPUT</span> <span style="color:#e6db74">&#34;${CMAKE_BINARY_DIR}/Square.spv&#34;</span>
-    <span style="color:#e6db74">COMMAND</span> <span style="color:#f92672">$ENV{</span>VK_SDK_PATH<span style="color:#f92672">}</span><span style="color:#e6db74">/Bin/dxc</span> <span style="color:#e6db74">-T</span> <span style="color:#e6db74">cs_6_0</span> <span style="color:#e6db74">-E</span> <span style="color:#e6db74">&#34;Main&#34;</span> <span style="color:#e6db74">-spirv</span> <span style="color:#e6db74">-fvk-use-dx-layout</span> <span style="color:#e6db74">-fspv-target-env=vulkan1.1</span> <span style="color:#e6db74">-Fo</span> <span style="color:#e6db74">&#34;${CMAKE_BINARY_DIR}/Square.spv&#34;</span> <span style="color:#e6db74">&#34;Square.hlsl&#34;</span>
-    <span style="color:#e6db74">DEPENDS</span> <span style="color:#e6db74">&#34;Square.hlsl&#34;</span>
-    <span style="color:#e6db74">WORKING_DIRECTORY</span> <span style="color:#f92672">${</span>CMAKE_CURRENT_SOURCE_DIR<span style="color:#f92672">}</span>
-    <span style="color:#e6db74">COMMENT</span> <span style="color:#e6db74">&#34;Buiding Shaders&#34;</span>
-)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>add_custom_target(<span style="color:#e6db74">ComputeShader</span> <span style="color:#e6db74">DEPENDS</span> <span style="color:#e6db74">&#34;${CMAKE_BINARY_DIR}/Square.spv&#34;</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>add_executable(<span style="color:#e6db74">VulkanCompute</span> <span style="color:#e6db74">&#34;main.cpp&#34;</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries(<span style="color:#e6db74">VulkanCompute</span> <span style="color:#e6db74">PRIVATE</span> <span style="color:#e6db74">Vulkan::Vulkan</span>)<span style="color:#960050;background-color:#1e0010">
-</span><span style="color:#960050;background-color:#1e0010"></span>add_dependencies(<span style="color:#e6db74">VulkanCompute</span> <span style="color:#e6db74">ComputeShader</span>)<span style="color:#960050;background-color:#1e0010">
-</span></code></pre></div><h2 id="preamble">Preamble</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cmake" data-lang="cmake"><span style="display:flex;"><span>cmake_minimum_required(<span style="color:#e6db74">VERSION</span> <span style="color:#e6db74">3.16</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>project(<span style="color:#e6db74">VulkanCompute</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>find_package(<span style="color:#e6db74">Vulkan</span> <span style="color:#e6db74">REQUIRED</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>add_custom_command(
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">OUTPUT</span> <span style="color:#e6db74">&#34;${CMAKE_BINARY_DIR}/Square.spv&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">COMMAND</span> <span style="color:#f92672">$ENV{</span>VK_SDK_PATH<span style="color:#f92672">}</span><span style="color:#e6db74">/Bin/dxc</span> <span style="color:#e6db74">-T</span> <span style="color:#e6db74">cs_6_0</span> <span style="color:#e6db74">-E</span> <span style="color:#e6db74">&#34;Main&#34;</span> <span style="color:#e6db74">-spirv</span> <span style="color:#e6db74">-fvk-use-dx-layout</span> <span style="color:#e6db74">-fspv-target-env=vulkan1.1</span> <span style="color:#e6db74">-Fo</span> <span style="color:#e6db74">&#34;${CMAKE_BINARY_DIR}/Square.spv&#34;</span> <span style="color:#e6db74">&#34;Square.hlsl&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">DEPENDS</span> <span style="color:#e6db74">&#34;Square.hlsl&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">WORKING_DIRECTORY</span> <span style="color:#f92672">${</span>CMAKE_CURRENT_SOURCE_DIR<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">COMMENT</span> <span style="color:#e6db74">&#34;Buiding Shaders&#34;</span>
+</span></span><span style="display:flex;"><span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>add_custom_target(<span style="color:#e6db74">ComputeShader</span> <span style="color:#e6db74">DEPENDS</span> <span style="color:#e6db74">&#34;${CMAKE_BINARY_DIR}/Square.spv&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>add_executable(<span style="color:#e6db74">VulkanCompute</span> <span style="color:#e6db74">&#34;main.cpp&#34;</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>target_link_libraries(<span style="color:#e6db74">VulkanCompute</span> <span style="color:#e6db74">PRIVATE</span> <span style="color:#e6db74">Vulkan::Vulkan</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span><span style="display:flex;"><span><span style="color:#960050;background-color:#1e0010"></span>add_dependencies(<span style="color:#e6db74">VulkanCompute</span> <span style="color:#e6db74">ComputeShader</span>)<span style="color:#960050;background-color:#1e0010">
+</span></span></span></code></pre></div><h2 id="preamble">Preamble</h2>
 <p>To use the Vulkan C++ header one just need to</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vulkan/vulkan.hpp&gt;</span><span style="color:#75715e">
-</span></code></pre></div><h2 id="vulkan-instance---vkinstance">Vulkan Instance - <code>vk::Instance</code></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#75715e">#include</span> <span style="color:#75715e">&lt;vulkan/vulkan.hpp&gt;</span><span style="color:#75715e">
+</span></span></span></code></pre></div><h2 id="vulkan-instance---vkinstance">Vulkan Instance - <code>vk::Instance</code></h2>
 <p>A Vulkan application starts with a <code>vk::Instance</code>, so lets create one:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>ApplicationInfo AppInfo{
-    <span style="color:#e6db74">&#34;VulkanCompute&#34;</span>,      <span style="color:#75715e">// Application Name
-</span><span style="color:#75715e"></span>    <span style="color:#ae81ff">1</span>,                    <span style="color:#75715e">// Application Version
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">nullptr</span>,              <span style="color:#75715e">// Engine Name or nullptr
-</span><span style="color:#75715e"></span>    <span style="color:#ae81ff">0</span>,                    <span style="color:#75715e">// Engine Version
-</span><span style="color:#75715e"></span>    VK_API_VERSION_1_1    <span style="color:#75715e">// Vulkan API version
-</span><span style="color:#75715e"></span>};
-
-<span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*&gt;</span> Layers <span style="color:#f92672">=</span> { <span style="color:#e6db74">&#34;VK_LAYER_KHRONOS_validation&#34;</span> };
-vk<span style="color:#f92672">::</span>InstanceCreateInfo InstanceCreateInfo(vk<span style="color:#f92672">::</span>InstanceCreateFlags(), <span style="color:#75715e">// Flags
-</span><span style="color:#75715e"></span>                                          <span style="color:#f92672">&amp;</span>AppInfo,                  <span style="color:#75715e">// Application Info
-</span><span style="color:#75715e"></span>                                          Layers.size(),             <span style="color:#75715e">// Layers count
-</span><span style="color:#75715e"></span>                                          Layers.data());            <span style="color:#75715e">// Layers
-</span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>Instance Instance <span style="color:#f92672">=</span> vk<span style="color:#f92672">::</span>createInstance(InstanceCreateInfo);
-</code></pre></div><p>Here I&rsquo;m enabling the <code>VK_LAYER_KHRONOS_validation</code> layer so we can have some help from
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>ApplicationInfo AppInfo{
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;VulkanCompute&#34;</span>,      <span style="color:#75715e">// Application Name
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#ae81ff">1</span>,                    <span style="color:#75715e">// Application Version
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">nullptr</span>,              <span style="color:#75715e">// Engine Name or nullptr
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#ae81ff">0</span>,                    <span style="color:#75715e">// Engine Version
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    VK_API_VERSION_1_1    <span style="color:#75715e">// Vulkan API version
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*&gt;</span> Layers <span style="color:#f92672">=</span> { <span style="color:#e6db74">&#34;VK_LAYER_KHRONOS_validation&#34;</span> };
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>InstanceCreateInfo InstanceCreateInfo(vk<span style="color:#f92672">::</span>InstanceCreateFlags(), <span style="color:#75715e">// Flags
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                          <span style="color:#f92672">&amp;</span>AppInfo,                  <span style="color:#75715e">// Application Info
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                          Layers.size(),             <span style="color:#75715e">// Layers count
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                          Layers.data());            <span style="color:#75715e">// Layers
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>Instance Instance <span style="color:#f92672">=</span> vk<span style="color:#f92672">::</span>createInstance(InstanceCreateInfo);
+</span></span></code></pre></div><p>Here I&rsquo;m enabling the <code>VK_LAYER_KHRONOS_validation</code> layer so we can have some help from
 Vulkan in case something goes wrong.</p>
 <h2 id="enumerating-the-physical-devices---vkphysicaldevice">Enumerating the Physical Devices - <code>vk::PhysicalDevice</code></h2>
 <p>A <code>vk::PhysicalDevice</code> represents, as the name suggests, the physical piece of hardware
 that we can use to run our application. We need to select a physical device from which
 we can create a logical device, <code>vk::Device</code> that we use to interact with it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>PhysicalDevice PhysicalDevice <span style="color:#f92672">=</span> Instance.enumeratePhysicalDevices().front();
-vk<span style="color:#f92672">::</span>PhysicalDeviceProperties DeviceProps <span style="color:#f92672">=</span> PhysicalDevice.getProperties();
-std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Device Name    : &#34;</span> <span style="color:#f92672">&lt;&lt;</span> DeviceProps.deviceName <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint32_t</span> ApiVersion <span style="color:#f92672">=</span> DeviceProps.apiVersion;
-std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Vulkan Version : &#34;</span> <span style="color:#f92672">&lt;&lt;</span> VK_VERSION_MAJOR(ApiVersion) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">&lt;&lt;</span> VK_VERSION_MINOR(ApiVersion) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">&lt;&lt;</span> VK_VERSION_PATCH(ApiVersion);
-vk<span style="color:#f92672">::</span>PhysicalDeviceLimits DeviceLimits <span style="color:#f92672">=</span> DeviceProps.limits;
-std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Max Compute Shared Memory Size: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> DeviceLimits.maxComputeSharedMemorySize <span style="color:#f92672">/</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; KB&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-</code></pre></div><p>Here I&rsquo;m just printing some information from the first physical device available in the machine.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>PhysicalDevice PhysicalDevice <span style="color:#f92672">=</span> Instance.enumeratePhysicalDevices().front();
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>PhysicalDeviceProperties DeviceProps <span style="color:#f92672">=</span> PhysicalDevice.getProperties();
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Device Name    : &#34;</span> <span style="color:#f92672">&lt;&lt;</span> DeviceProps.deviceName <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint32_t</span> ApiVersion <span style="color:#f92672">=</span> DeviceProps.apiVersion;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Vulkan Version : &#34;</span> <span style="color:#f92672">&lt;&lt;</span> VK_VERSION_MAJOR(ApiVersion) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">&lt;&lt;</span> VK_VERSION_MINOR(ApiVersion) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">&lt;&lt;</span> VK_VERSION_PATCH(ApiVersion);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>PhysicalDeviceLimits DeviceLimits <span style="color:#f92672">=</span> DeviceProps.limits;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Max Compute Shared Memory Size: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> DeviceLimits.maxComputeSharedMemorySize <span style="color:#f92672">/</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; KB&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span></code></pre></div><p>Here I&rsquo;m just printing some information from the first physical device available in the machine.</p>
 <h2 id="queue-family-index---vkqueuefamilyproperties">Queue Family Index - <code>vk::QueueFamilyProperties</code></h2>
 <p>We need a <code>vk::Queue</code> where we submit work to be done by the device, hopefully a GPU
 in this case. Note that extra code is required to make sure the selected device is the
 one you want, in case there are more than one available.</p>
 <p>Vulkan supports different types of queues, so we need to query which queue family we
 need to create a queue suitable for compute work:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>QueueFamilyProperties<span style="color:#f92672">&gt;</span> QueueFamilyProps <span style="color:#f92672">=</span> PhysicalDevice.getQueueFamilyProperties();
-<span style="color:#66d9ef">auto</span> PropIt <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>find_if(QueueFamilyProps.begin(), QueueFamilyProps.end(), [](<span style="color:#66d9ef">const</span> vk<span style="color:#f92672">::</span>QueueFamilyProperties<span style="color:#f92672">&amp;</span> Prop)
-{
-    <span style="color:#66d9ef">return</span> Prop.queueFlags <span style="color:#f92672">&amp;</span> vk<span style="color:#f92672">::</span>QueueFlagBits<span style="color:#f92672">::</span>eCompute;
-});
-<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint32_t</span> ComputeQueueFamilyIndex <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>distance(QueueFamilyProps.begin(), PropIt);
-std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Compute Queue Family Index: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> ComputeQueueFamilyIndex <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-</code></pre></div><p>This will select a queue that has compute capabilities. This is equivalent to searching
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>QueueFamilyProperties<span style="color:#f92672">&gt;</span> QueueFamilyProps <span style="color:#f92672">=</span> PhysicalDevice.getQueueFamilyProperties();
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">auto</span> PropIt <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>find_if(QueueFamilyProps.begin(), QueueFamilyProps.end(), [](<span style="color:#66d9ef">const</span> vk<span style="color:#f92672">::</span>QueueFamilyProperties<span style="color:#f92672">&amp;</span> Prop)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Prop.queueFlags <span style="color:#f92672">&amp;</span> vk<span style="color:#f92672">::</span>QueueFlagBits<span style="color:#f92672">::</span>eCompute;
+</span></span><span style="display:flex;"><span>});
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint32_t</span> ComputeQueueFamilyIndex <span style="color:#f92672">=</span> std<span style="color:#f92672">::</span>distance(QueueFamilyProps.begin(), PropIt);
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Compute Queue Family Index: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> ComputeQueueFamilyIndex <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span></code></pre></div><p>This will select a queue that has compute capabilities. This is equivalent to searching
 for a queue with the <code>VK_QUEUE_COMPUTE_BIT</code> flag using the C API.</p>
 <h2 id="vulkan-device---vkdevice">Vulkan Device - <code>vk::Device</code></h2>
 <p>Creating a device requires a <code>vk::DeviceQueueCreateInfo</code> and a <code>vk::DeviceCreateInfo</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>DeviceQueueCreateInfo DeviceQueueCreateInfo(vk<span style="color:#f92672">::</span>DeviceQueueCreateFlags(),   <span style="color:#75715e">// Flags
-</span><span style="color:#75715e"></span>                                                ComputeQueueFamilyIndex,        <span style="color:#75715e">// Queue Family Index
-</span><span style="color:#75715e"></span>                                                <span style="color:#ae81ff">1</span>);                             <span style="color:#75715e">// Number of Queues
-</span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>DeviceCreateInfo DeviceCreateInfo(vk<span style="color:#f92672">::</span>DeviceCreateFlags(),   <span style="color:#75715e">// Flags
-</span><span style="color:#75715e"></span>                                        DeviceQueueCreateInfo);  <span style="color:#75715e">// Device Queue Create Info struct
-</span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>Device Device <span style="color:#f92672">=</span> PhysicalDevice.createDevice(DeviceCreateInfo);
-</code></pre></div><h2 id="allocating-memory">Allocating Memory</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>DeviceQueueCreateInfo DeviceQueueCreateInfo(vk<span style="color:#f92672">::</span>DeviceQueueCreateFlags(),   <span style="color:#75715e">// Flags
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                                ComputeQueueFamilyIndex,        <span style="color:#75715e">// Queue Family Index
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                                <span style="color:#ae81ff">1</span>);                             <span style="color:#75715e">// Number of Queues
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>DeviceCreateInfo DeviceCreateInfo(vk<span style="color:#f92672">::</span>DeviceCreateFlags(),   <span style="color:#75715e">// Flags
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                        DeviceQueueCreateInfo);  <span style="color:#75715e">// Device Queue Create Info struct
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>Device Device <span style="color:#f92672">=</span> PhysicalDevice.createDevice(DeviceCreateInfo);
+</span></span></code></pre></div><h2 id="allocating-memory">Allocating Memory</h2>
 <p>Allocating memory in Vulkan is a pain. There libraries that facilitate this task like AMD&rsquo;s
 <a href="https://gpuopen.com/vulkan-memory-allocator/" target="_blank">Vulkan Memory Allocator</a>, but using this
 libraries is out of the scope for this post, also I wanted to see how to do it manually
@@ -260,64 +260,64 @@ memory for several buffers for example. For the sake of simplicity, each <code>v
 have its corresponding <code>vk::Memory</code> associated with it:</p>
 <h3 id="creating-the-buffers---vkbuffer">Creating the buffers - <code>vk::Buffer</code></h3>
 <p>I&rsquo;m going to create two buffers with 10 elements each:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint32_t</span> NumElements <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
-<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint32_t</span> BufferSize <span style="color:#f92672">=</span> NumElements <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int32_t</span>);
-
-vk<span style="color:#f92672">::</span>BufferCreateInfo BufferCreateInfo{
-    vk<span style="color:#f92672">::</span>BufferCreateFlags(),                    <span style="color:#75715e">// Flags
-</span><span style="color:#75715e"></span>    BufferSize,                                 <span style="color:#75715e">// Size
-</span><span style="color:#75715e"></span>    vk<span style="color:#f92672">::</span>BufferUsageFlagBits<span style="color:#f92672">::</span>eStorageBuffer,    <span style="color:#75715e">// Usage
-</span><span style="color:#75715e"></span>    vk<span style="color:#f92672">::</span>SharingMode<span style="color:#f92672">::</span>eExclusive,                <span style="color:#75715e">// Sharing mode
-</span><span style="color:#75715e"></span>    <span style="color:#ae81ff">1</span>,                                          <span style="color:#75715e">// Number of queue family indices
-</span><span style="color:#75715e"></span>    <span style="color:#f92672">&amp;</span>ComputeQueueFamilyIndex                    <span style="color:#75715e">// List of queue family indices
-</span><span style="color:#75715e"></span>};
-vk<span style="color:#f92672">::</span>Buffer InBuffer <span style="color:#f92672">=</span> Device.createBuffer(BufferCreateInfo);
-vk<span style="color:#f92672">::</span>Buffer OutBuffer <span style="color:#f92672">=</span> Device.createBuffer(BufferCreateInfo);
-</code></pre></div><h3 id="allocating-memory-1">Allocating memory</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint32_t</span> NumElements <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint32_t</span> BufferSize <span style="color:#f92672">=</span> NumElements <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int32_t</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>BufferCreateInfo BufferCreateInfo{
+</span></span><span style="display:flex;"><span>    vk<span style="color:#f92672">::</span>BufferCreateFlags(),                    <span style="color:#75715e">// Flags
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    BufferSize,                                 <span style="color:#75715e">// Size
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    vk<span style="color:#f92672">::</span>BufferUsageFlagBits<span style="color:#f92672">::</span>eStorageBuffer,    <span style="color:#75715e">// Usage
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    vk<span style="color:#f92672">::</span>SharingMode<span style="color:#f92672">::</span>eExclusive,                <span style="color:#75715e">// Sharing mode
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#ae81ff">1</span>,                                          <span style="color:#75715e">// Number of queue family indices
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#f92672">&amp;</span>ComputeQueueFamilyIndex                    <span style="color:#75715e">// List of queue family indices
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>};
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>Buffer InBuffer <span style="color:#f92672">=</span> Device.createBuffer(BufferCreateInfo);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>Buffer OutBuffer <span style="color:#f92672">=</span> Device.createBuffer(BufferCreateInfo);
+</span></span></code></pre></div><h3 id="allocating-memory-1">Allocating memory</h3>
 <p>To allocate memory in Vulkan we first need to find the type of memory we actually require
 to back the buffers we have. The <code>vk::Device</code> provides a member function called <code>vk::Device::getBufferMemoryRequirements</code> that returns a <code>vk::MemoryRequirements</code> object
 with information so we can ask Vulkan how much memory to allocate for each buffer:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>MemoryRequirements InBufferMemoryRequirements <span style="color:#f92672">=</span> Device.getBufferMemoryRequirements(InBuffer);
-vk<span style="color:#f92672">::</span>MemoryRequirements OutBufferMemoryRequirements <span style="color:#f92672">=</span> Device.getBufferMemoryRequirements(OutBuffer);
-</code></pre></div><p>With this information on hand we can query Vulkan for the memory type required to allocate
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>MemoryRequirements InBufferMemoryRequirements <span style="color:#f92672">=</span> Device.getBufferMemoryRequirements(InBuffer);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>MemoryRequirements OutBufferMemoryRequirements <span style="color:#f92672">=</span> Device.getBufferMemoryRequirements(OutBuffer);
+</span></span></code></pre></div><p>With this information on hand we can query Vulkan for the memory type required to allocate
 memory that is visible from the host, i.e., memory that can be mapped on the host side:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>PhysicalDeviceMemoryProperties MemoryProperties <span style="color:#f92672">=</span> PhysicalDevice.getMemoryProperties();
-
-<span style="color:#66d9ef">uint32_t</span> MemoryTypeIndex <span style="color:#f92672">=</span> <span style="color:#66d9ef">uint32_t</span>(<span style="color:#f92672">~</span><span style="color:#ae81ff">0</span>);
-vk<span style="color:#f92672">::</span>DeviceSize MemoryHeapSize <span style="color:#f92672">=</span> <span style="color:#66d9ef">uint32_t</span>(<span style="color:#f92672">~</span><span style="color:#ae81ff">0</span>);
-<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">uint32_t</span> CurrentMemoryTypeIndex <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; CurrentMemoryTypeIndex <span style="color:#f92672">&lt;</span> MemoryProperties.memoryTypeCount; <span style="color:#f92672">++</span>CurrentMemoryTypeIndex)
-{
-    vk<span style="color:#f92672">::</span>MemoryType MemoryType <span style="color:#f92672">=</span> MemoryProperties.memoryTypes[CurrentMemoryTypeIndex];
-    <span style="color:#66d9ef">if</span> ((vk<span style="color:#f92672">::</span>MemoryPropertyFlagBits<span style="color:#f92672">::</span>eHostVisible <span style="color:#f92672">&amp;</span> MemoryType.propertyFlags) <span style="color:#f92672">&amp;&amp;</span>
-        (vk<span style="color:#f92672">::</span>MemoryPropertyFlagBits<span style="color:#f92672">::</span>eHostCoherent <span style="color:#f92672">&amp;</span> MemoryType.propertyFlags))
-    {
-        MemoryHeapSize <span style="color:#f92672">=</span> MemoryProperties.memoryHeaps[MemoryType.heapIndex].size;
-        MemoryTypeIndex <span style="color:#f92672">=</span> CurrentMemoryTypeIndex;
-        <span style="color:#66d9ef">break</span>;
-    }
-}
-
-std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Memory Type Index: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> MemoryTypeIndex <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Memory Heap Size : &#34;</span> <span style="color:#f92672">&lt;&lt;</span> MemoryHeapSize <span style="color:#f92672">/</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; GB&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-</code></pre></div><p>And finally we can ask the device to allocate the required memory for our buffers:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>MemoryAllocateInfo InBufferMemoryAllocateInfo(InBufferMemoryRequirements.size, MemoryTypeIndex);
-vk<span style="color:#f92672">::</span>MemoryAllocateInfo OutBufferMemoryAllocateInfo(OutBufferMemoryRequirements.size, MemoryTypeIndex);
-vk<span style="color:#f92672">::</span>DeviceMemory InBufferMemory <span style="color:#f92672">=</span> Device.allocateMemory(InBufferMemoryAllocateInfo);
-vk<span style="color:#f92672">::</span>DeviceMemory OutBufferMemory <span style="color:#f92672">=</span> Device.allocateMemory(InBufferMemoryAllocateInfo);
-</code></pre></div><p>The last step of the memory allocation part is to get a mapped pointer to this memory
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>PhysicalDeviceMemoryProperties MemoryProperties <span style="color:#f92672">=</span> PhysicalDevice.getMemoryProperties();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">uint32_t</span> MemoryTypeIndex <span style="color:#f92672">=</span> <span style="color:#66d9ef">uint32_t</span>(<span style="color:#f92672">~</span><span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>DeviceSize MemoryHeapSize <span style="color:#f92672">=</span> <span style="color:#66d9ef">uint32_t</span>(<span style="color:#f92672">~</span><span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">uint32_t</span> CurrentMemoryTypeIndex <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; CurrentMemoryTypeIndex <span style="color:#f92672">&lt;</span> MemoryProperties.memoryTypeCount; <span style="color:#f92672">++</span>CurrentMemoryTypeIndex)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    vk<span style="color:#f92672">::</span>MemoryType MemoryType <span style="color:#f92672">=</span> MemoryProperties.memoryTypes[CurrentMemoryTypeIndex];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> ((vk<span style="color:#f92672">::</span>MemoryPropertyFlagBits<span style="color:#f92672">::</span>eHostVisible <span style="color:#f92672">&amp;</span> MemoryType.propertyFlags) <span style="color:#f92672">&amp;&amp;</span>
+</span></span><span style="display:flex;"><span>        (vk<span style="color:#f92672">::</span>MemoryPropertyFlagBits<span style="color:#f92672">::</span>eHostCoherent <span style="color:#f92672">&amp;</span> MemoryType.propertyFlags))
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>        MemoryHeapSize <span style="color:#f92672">=</span> MemoryProperties.memoryHeaps[MemoryType.heapIndex].size;
+</span></span><span style="display:flex;"><span>        MemoryTypeIndex <span style="color:#f92672">=</span> CurrentMemoryTypeIndex;
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Memory Type Index: &#34;</span> <span style="color:#f92672">&lt;&lt;</span> MemoryTypeIndex <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Memory Heap Size : &#34;</span> <span style="color:#f92672">&lt;&lt;</span> MemoryHeapSize <span style="color:#f92672">/</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">1024</span> <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; GB&#34;</span> <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span></code></pre></div><p>And finally we can ask the device to allocate the required memory for our buffers:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>MemoryAllocateInfo InBufferMemoryAllocateInfo(InBufferMemoryRequirements.size, MemoryTypeIndex);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>MemoryAllocateInfo OutBufferMemoryAllocateInfo(OutBufferMemoryRequirements.size, MemoryTypeIndex);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>DeviceMemory InBufferMemory <span style="color:#f92672">=</span> Device.allocateMemory(InBufferMemoryAllocateInfo);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>DeviceMemory OutBufferMemory <span style="color:#f92672">=</span> Device.allocateMemory(InBufferMemoryAllocateInfo);
+</span></span></code></pre></div><p>The last step of the memory allocation part is to get a mapped pointer to this memory
 that can be used to copy data from the host to the device. For this simple example
 I&rsquo;m just setting the value of each element as its index:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">int32_t</span><span style="color:#f92672">*</span> InBufferPtr <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int32_t</span><span style="color:#f92672">*&gt;</span>(Device.mapMemory(InBufferMemory, <span style="color:#ae81ff">0</span>, BufferSize));
-<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int32_t</span> I <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; I <span style="color:#f92672">&lt;</span> NumElements; <span style="color:#f92672">++</span>I)
-{
-    InBufferPtr[I] <span style="color:#f92672">=</span> I;
-}
-Device.unmapMemory(InBufferMemory);
-</code></pre></div><h3 id="binding-buffers-to-memory">Binding Buffers to Memory</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#66d9ef">int32_t</span><span style="color:#f92672">*</span> InBufferPtr <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int32_t</span><span style="color:#f92672">*&gt;</span>(Device.mapMemory(InBufferMemory, <span style="color:#ae81ff">0</span>, BufferSize));
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">int32_t</span> I <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; I <span style="color:#f92672">&lt;</span> NumElements; <span style="color:#f92672">++</span>I)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    InBufferPtr[I] <span style="color:#f92672">=</span> I;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>Device.unmapMemory(InBufferMemory);
+</span></span></code></pre></div><h3 id="binding-buffers-to-memory">Binding Buffers to Memory</h3>
 <p>Finally we can bind the buffers to the allocated memory:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">Device.bindBufferMemory(InBuffer, InBufferMemory, <span style="color:#ae81ff">0</span>);
-Device.bindBufferMemory(OutBuffer, OutBufferMemory, <span style="color:#ae81ff">0</span>);
-</code></pre></div><p>And that concludes the memory allocation part of the program.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>Device.bindBufferMemory(InBuffer, InBufferMemory, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>Device.bindBufferMemory(OutBuffer, OutBufferMemory, <span style="color:#ae81ff">0</span>);
+</span></span></code></pre></div><p>And that concludes the memory allocation part of the program.</p>
 <h2 id="creating-the-compute-pipeline---vkpipeline">Creating the Compute Pipeline - <code>vk::Pipeline</code></h2>
 <p>The next part of the process is to create the compute pipeline that will be used to run
 the compute shader on the GPU. Lets start with the HLSL shader we are going to run:</p>
@@ -342,160 +342,160 @@ representing this shader. The goal here is to load this shader as the compute st
 our pipeline.</p>
 <h3 id="shader-module---vkshadermodule">Shader Module - <code>vk::ShaderModule</code></h3>
 <p>We start by reading the contents of the SPIR-V file and creating a <code>vk::ShaderModule</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">char</span><span style="color:#f92672">&gt;</span> ShaderContents;
-<span style="color:#66d9ef">if</span> (std<span style="color:#f92672">::</span>ifstream ShaderFile{ <span style="color:#e6db74">&#34;Square.spv&#34;</span>, std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>binary <span style="color:#f92672">|</span> std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>ate })
-{
-    <span style="color:#66d9ef">const</span> size_t FileSize <span style="color:#f92672">=</span> ShaderFile.tellg();
-    ShaderFile.seekg(<span style="color:#ae81ff">0</span>);
-    ShaderContents.resize(FileSize, <span style="color:#e6db74">&#39;\0&#39;</span>);
-    ShaderFile.read(ShaderContents.data(), FileSize);
-}
-
-vk<span style="color:#f92672">::</span>ShaderModuleCreateInfo ShaderModuleCreateInfo(
-    vk<span style="color:#f92672">::</span>ShaderModuleCreateFlags(),                                <span style="color:#75715e">// Flags
-</span><span style="color:#75715e"></span>    ShaderContents.size(),                                        <span style="color:#75715e">// Code size
-</span><span style="color:#75715e"></span>    <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint32_t</span><span style="color:#f92672">*&gt;</span>(ShaderContents.data()));    <span style="color:#75715e">// Code
-</span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>ShaderModule ShaderModule <span style="color:#f92672">=</span> Device.createShaderModule(ShaderModuleCreateInfo);
-</code></pre></div><h3 id="descriptor-set-layout---vkdescriptorsetlayout">Descriptor Set Layout - <code>vk::DescriptorSetLayout</code></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">char</span><span style="color:#f92672">&gt;</span> ShaderContents;
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (std<span style="color:#f92672">::</span>ifstream ShaderFile{ <span style="color:#e6db74">&#34;Square.spv&#34;</span>, std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>binary <span style="color:#f92672">|</span> std<span style="color:#f92672">::</span>ios<span style="color:#f92672">::</span>ate })
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">const</span> size_t FileSize <span style="color:#f92672">=</span> ShaderFile.tellg();
+</span></span><span style="display:flex;"><span>    ShaderFile.seekg(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>    ShaderContents.resize(FileSize, <span style="color:#e6db74">&#39;\0&#39;</span>);
+</span></span><span style="display:flex;"><span>    ShaderFile.read(ShaderContents.data(), FileSize);
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>ShaderModuleCreateInfo ShaderModuleCreateInfo(
+</span></span><span style="display:flex;"><span>    vk<span style="color:#f92672">::</span>ShaderModuleCreateFlags(),                                <span style="color:#75715e">// Flags
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    ShaderContents.size(),                                        <span style="color:#75715e">// Code size
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">reinterpret_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint32_t</span><span style="color:#f92672">*&gt;</span>(ShaderContents.data()));    <span style="color:#75715e">// Code
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>ShaderModule ShaderModule <span style="color:#f92672">=</span> Device.createShaderModule(ShaderModuleCreateInfo);
+</span></span></code></pre></div><h3 id="descriptor-set-layout---vkdescriptorsetlayout">Descriptor Set Layout - <code>vk::DescriptorSetLayout</code></h3>
 <p>Next we define the <code>vk::DescriptorSetLayout</code>. This object will tell Vulkan the layout
 of data to be passed into to the pipeline. Note that this is not the actual descriptor set,
 it is just the <em>layout</em> of the thing. This got me confused when I first saw it. The actual
 descriptor set is represented by a <code>vk::DescriptorSet</code> and it needs to be allocated using
 a descriptor pool. Vulkan is complicated, but you have control!</p>
 <p>Let&rsquo;s define the <code>vk::DescriptorSetLayout</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++"><span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>DescriptorSetLayoutBinding<span style="color:#f92672">&gt;</span> DescriptorSetLayoutBinding <span style="color:#f92672">=</span> {
-    {<span style="color:#ae81ff">0</span>, vk<span style="color:#f92672">::</span>DescriptorType<span style="color:#f92672">::</span>eStorageBuffer, <span style="color:#ae81ff">1</span>, vk<span style="color:#f92672">::</span>ShaderStageFlagBits<span style="color:#f92672">::</span>eCompute},
-    {<span style="color:#ae81ff">1</span>, vk<span style="color:#f92672">::</span>DescriptorType<span style="color:#f92672">::</span>eStorageBuffer, <span style="color:#ae81ff">1</span>, vk<span style="color:#f92672">::</span>ShaderStageFlagBits<span style="color:#f92672">::</span>eCompute}
-};
-vk<span style="color:#f92672">::</span>DescriptorSetLayoutCreateInfo DescriptorSetLayoutCreateInfo(
-    vk<span style="color:#f92672">::</span>DescriptorSetLayoutCreateFlags(),
-    DescriptorSetLayoutBinding);
-vk<span style="color:#f92672">::</span>DescriptorSetLayout DescriptorSetLayout <span style="color:#f92672">=</span> Device.createDescriptorSetLayout(DescriptorSetLayoutCreateInfo);
-</code></pre></div><p>The <code>vk::DescriptorSetLayout</code> is specified using a series of <code>vk::DescriptorSetLayoutBinding</code>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>DescriptorSetLayoutBinding<span style="color:#f92672">&gt;</span> DescriptorSetLayoutBinding <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    {<span style="color:#ae81ff">0</span>, vk<span style="color:#f92672">::</span>DescriptorType<span style="color:#f92672">::</span>eStorageBuffer, <span style="color:#ae81ff">1</span>, vk<span style="color:#f92672">::</span>ShaderStageFlagBits<span style="color:#f92672">::</span>eCompute},
+</span></span><span style="display:flex;"><span>    {<span style="color:#ae81ff">1</span>, vk<span style="color:#f92672">::</span>DescriptorType<span style="color:#f92672">::</span>eStorageBuffer, <span style="color:#ae81ff">1</span>, vk<span style="color:#f92672">::</span>ShaderStageFlagBits<span style="color:#f92672">::</span>eCompute}
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>DescriptorSetLayoutCreateInfo DescriptorSetLayoutCreateInfo(
+</span></span><span style="display:flex;"><span>    vk<span style="color:#f92672">::</span>DescriptorSetLayoutCreateFlags(),
+</span></span><span style="display:flex;"><span>    DescriptorSetLayoutBinding);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>DescriptorSetLayout DescriptorSetLayout <span style="color:#f92672">=</span> Device.createDescriptorSetLayout(DescriptorSetLayoutCreateInfo);
+</span></span></code></pre></div><p>The <code>vk::DescriptorSetLayout</code> is specified using a series of <code>vk::DescriptorSetLayoutBinding</code>
 objects. Each binding will assign an index to a buffer in the pipeline. With the
 <code>vk::DescriptorSetLayout</code> created we can move to create the layout of our compute pipeline.
 Yes, another layout, not the actual thing!</p>
 <h3 id="pipeline-layout---vkpipelinelayout">Pipeline Layout - <code>vk::PipelineLayout</code></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>PipelineLayoutCreateInfo PipelineLayoutCreateInfo(vk<span style="color:#f92672">::</span>PipelineLayoutCreateFlags(), DescriptorSetLayout);
-vk<span style="color:#f92672">::</span>PipelineLayout PipelineLayout <span style="color:#f92672">=</span> Device.createPipelineLayout(PipelineLayoutCreateInfo);
-vk<span style="color:#f92672">::</span>PipelineCache PipelineCache <span style="color:#f92672">=</span> Device.createPipelineCache(vk<span style="color:#f92672">::</span>PipelineCacheCreateInfo());
-</code></pre></div><h3 id="pipeline---vkpipeline">Pipeline - <code>vk::Pipeline</code></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>PipelineLayoutCreateInfo PipelineLayoutCreateInfo(vk<span style="color:#f92672">::</span>PipelineLayoutCreateFlags(), DescriptorSetLayout);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>PipelineLayout PipelineLayout <span style="color:#f92672">=</span> Device.createPipelineLayout(PipelineLayoutCreateInfo);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>PipelineCache PipelineCache <span style="color:#f92672">=</span> Device.createPipelineCache(vk<span style="color:#f92672">::</span>PipelineCacheCreateInfo());
+</span></span></code></pre></div><h3 id="pipeline---vkpipeline">Pipeline - <code>vk::Pipeline</code></h3>
 <p>Now we can finally create the compute pipeline:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>PipelineShaderStageCreateInfo PipelineShaderCreateInfo(
-    vk<span style="color:#f92672">::</span>PipelineShaderStageCreateFlags(),  <span style="color:#75715e">// Flags
-</span><span style="color:#75715e"></span>    vk<span style="color:#f92672">::</span>ShaderStageFlagBits<span style="color:#f92672">::</span>eCompute,     <span style="color:#75715e">// Stage
-</span><span style="color:#75715e"></span>    ShaderModule,                          <span style="color:#75715e">// Shader Module
-</span><span style="color:#75715e"></span>    <span style="color:#e6db74">&#34;Main&#34;</span>);                               <span style="color:#75715e">// Shader Entry Point
-</span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>ComputePipelineCreateInfo ComputePipelineCreateInfo(
-    vk<span style="color:#f92672">::</span>PipelineCreateFlags(),    <span style="color:#75715e">// Flags
-</span><span style="color:#75715e"></span>    PipelineShaderCreateInfo,     <span style="color:#75715e">// Shader Create Info struct
-</span><span style="color:#75715e"></span>    PipelineLayout);              <span style="color:#75715e">// Pipeline Layout
-</span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>Pipeline ComputePipeline <span style="color:#f92672">=</span> Device.createComputePipeline(PipelineCache, ComputePipelineCreateInfo);
-</code></pre></div><h2 id="creating-the-vkdescriptorset">Creating the <code>vk::DescriptorSet</code></h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>PipelineShaderStageCreateInfo PipelineShaderCreateInfo(
+</span></span><span style="display:flex;"><span>    vk<span style="color:#f92672">::</span>PipelineShaderStageCreateFlags(),  <span style="color:#75715e">// Flags
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    vk<span style="color:#f92672">::</span>ShaderStageFlagBits<span style="color:#f92672">::</span>eCompute,     <span style="color:#75715e">// Stage
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    ShaderModule,                          <span style="color:#75715e">// Shader Module
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#e6db74">&#34;Main&#34;</span>);                               <span style="color:#75715e">// Shader Entry Point
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>ComputePipelineCreateInfo ComputePipelineCreateInfo(
+</span></span><span style="display:flex;"><span>    vk<span style="color:#f92672">::</span>PipelineCreateFlags(),    <span style="color:#75715e">// Flags
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    PipelineShaderCreateInfo,     <span style="color:#75715e">// Shader Create Info struct
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    PipelineLayout);              <span style="color:#75715e">// Pipeline Layout
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>Pipeline ComputePipeline <span style="color:#f92672">=</span> Device.createComputePipeline(PipelineCache, ComputePipelineCreateInfo);
+</span></span></code></pre></div><h2 id="creating-the-vkdescriptorset">Creating the <code>vk::DescriptorSet</code></h2>
 <p>Descriptor sets must be allocated in a <code>vk::DescriptorPool</code>, so we need to create one first:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>DescriptorPoolSize DescriptorPoolSize(vk<span style="color:#f92672">::</span>DescriptorType<span style="color:#f92672">::</span>eStorageBuffer, <span style="color:#ae81ff">2</span>);
-vk<span style="color:#f92672">::</span>DescriptorPoolCreateInfo DescriptorPoolCreateInfo(vk<span style="color:#f92672">::</span>DescriptorPoolCreateFlags(), <span style="color:#ae81ff">1</span>, DescriptorPoolSize);
-vk<span style="color:#f92672">::</span>DescriptorPool DescriptorPool <span style="color:#f92672">=</span> Device.createDescriptorPool(DescriptorPoolCreateInfo);
-</code></pre></div><p>Now we can finally allocate the descriptor set and update them to use our buffers:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>DescriptorSetAllocateInfo DescriptorSetAllocInfo(DescriptorPool, <span style="color:#ae81ff">1</span>, <span style="color:#f92672">&amp;</span>DescriptorSetLayout);
-<span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>DescriptorSet<span style="color:#f92672">&gt;</span> DescriptorSets <span style="color:#f92672">=</span> Device.allocateDescriptorSets(DescriptorSetAllocInfo);
-vk<span style="color:#f92672">::</span>DescriptorSet DescriptorSet <span style="color:#f92672">=</span> DescriptorSets.front();
-vk<span style="color:#f92672">::</span>DescriptorBufferInfo InBufferInfo(InBuffer, <span style="color:#ae81ff">0</span>, NumElements <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int32_t</span>));
-vk<span style="color:#f92672">::</span>DescriptorBufferInfo OutBufferInfo(OutBuffer, <span style="color:#ae81ff">0</span>, NumElements <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int32_t</span>));
-
-<span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>WriteDescriptorSet<span style="color:#f92672">&gt;</span> WriteDescriptorSets <span style="color:#f92672">=</span> {
-    {DescriptorSet, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, vk<span style="color:#f92672">::</span>DescriptorType<span style="color:#f92672">::</span>eStorageBuffer, <span style="color:#66d9ef">nullptr</span>, <span style="color:#f92672">&amp;</span>InBufferInfo},
-    {DescriptorSet, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, vk<span style="color:#f92672">::</span>DescriptorType<span style="color:#f92672">::</span>eStorageBuffer, <span style="color:#66d9ef">nullptr</span>, <span style="color:#f92672">&amp;</span>OutBufferInfo},
-};
-Device.updateDescriptorSets(WriteDescriptorSets, {});
-</code></pre></div><h2 id="submitting-the-work-to-the-gpu">Submitting the work to the GPU</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>DescriptorPoolSize DescriptorPoolSize(vk<span style="color:#f92672">::</span>DescriptorType<span style="color:#f92672">::</span>eStorageBuffer, <span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>DescriptorPoolCreateInfo DescriptorPoolCreateInfo(vk<span style="color:#f92672">::</span>DescriptorPoolCreateFlags(), <span style="color:#ae81ff">1</span>, DescriptorPoolSize);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>DescriptorPool DescriptorPool <span style="color:#f92672">=</span> Device.createDescriptorPool(DescriptorPoolCreateInfo);
+</span></span></code></pre></div><p>Now we can finally allocate the descriptor set and update them to use our buffers:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>DescriptorSetAllocateInfo DescriptorSetAllocInfo(DescriptorPool, <span style="color:#ae81ff">1</span>, <span style="color:#f92672">&amp;</span>DescriptorSetLayout);
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>DescriptorSet<span style="color:#f92672">&gt;</span> DescriptorSets <span style="color:#f92672">=</span> Device.allocateDescriptorSets(DescriptorSetAllocInfo);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>DescriptorSet DescriptorSet <span style="color:#f92672">=</span> DescriptorSets.front();
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>DescriptorBufferInfo InBufferInfo(InBuffer, <span style="color:#ae81ff">0</span>, NumElements <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int32_t</span>));
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>DescriptorBufferInfo OutBufferInfo(OutBuffer, <span style="color:#ae81ff">0</span>, NumElements <span style="color:#f92672">*</span> <span style="color:#66d9ef">sizeof</span>(<span style="color:#66d9ef">int32_t</span>));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>WriteDescriptorSet<span style="color:#f92672">&gt;</span> WriteDescriptorSets <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    {DescriptorSet, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, vk<span style="color:#f92672">::</span>DescriptorType<span style="color:#f92672">::</span>eStorageBuffer, <span style="color:#66d9ef">nullptr</span>, <span style="color:#f92672">&amp;</span>InBufferInfo},
+</span></span><span style="display:flex;"><span>    {DescriptorSet, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, vk<span style="color:#f92672">::</span>DescriptorType<span style="color:#f92672">::</span>eStorageBuffer, <span style="color:#66d9ef">nullptr</span>, <span style="color:#f92672">&amp;</span>OutBufferInfo},
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>Device.updateDescriptorSets(WriteDescriptorSets, {});
+</span></span></code></pre></div><h2 id="submitting-the-work-to-the-gpu">Submitting the work to the GPU</h2>
 <h3 id="command-pool---vkcommandpool">Command Pool - <code>vk::CommandPool</code></h3>
 <p>To actually run this shader on the GPU we need to submit the work on a <code>vk::Queue</code>. We
 tell the queue to commands stored in a one or more <code>vk::CommandBuffer</code>s. Commands must
 be allocated in a <code>vk::CommandPool</code>, so we need to create one first:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>CommandPoolCreateInfo CommandPoolCreateInfo(vk<span style="color:#f92672">::</span>CommandPoolCreateFlags(), ComputeQueueFamilyIndex);
-vk<span style="color:#f92672">::</span>CommandPool CommandPool <span style="color:#f92672">=</span> Device.createCommandPool(CommandPoolCreateInfo);
-</code></pre></div><h3 id="command-buffers---vkcommandbuffer">Command Buffers - <code>vk::CommandBuffer</code></h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>CommandPoolCreateInfo CommandPoolCreateInfo(vk<span style="color:#f92672">::</span>CommandPoolCreateFlags(), ComputeQueueFamilyIndex);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>CommandPool CommandPool <span style="color:#f92672">=</span> Device.createCommandPool(CommandPoolCreateInfo);
+</span></span></code></pre></div><h3 id="command-buffers---vkcommandbuffer">Command Buffers - <code>vk::CommandBuffer</code></h3>
 <p>Now we can use the command pool to allocate one or more command buffers:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>CommandBufferAllocateInfo CommandBufferAllocInfo(
-    CommandPool,                         <span style="color:#75715e">// Command Pool
-</span><span style="color:#75715e"></span>    vk<span style="color:#f92672">::</span>CommandBufferLevel<span style="color:#f92672">::</span>ePrimary,    <span style="color:#75715e">// Level
-</span><span style="color:#75715e"></span>    <span style="color:#ae81ff">1</span>);                                  <span style="color:#75715e">// Num Command Buffers
-</span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>CommandBuffer<span style="color:#f92672">&gt;</span> CmdBuffers <span style="color:#f92672">=</span> Device.allocateCommandBuffers(CommandBufferAllocInfo);
-vk<span style="color:#f92672">::</span>CommandBuffer CmdBuffer <span style="color:#f92672">=</span> CmdBuffers.front();
-</code></pre></div><h3 id="recording-commands">Recording Commands</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>CommandBufferAllocateInfo CommandBufferAllocInfo(
+</span></span><span style="display:flex;"><span>    CommandPool,                         <span style="color:#75715e">// Command Pool
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    vk<span style="color:#f92672">::</span>CommandBufferLevel<span style="color:#f92672">::</span>ePrimary,    <span style="color:#75715e">// Level
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#ae81ff">1</span>);                                  <span style="color:#75715e">// Num Command Buffers
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span>vk<span style="color:#f92672">::</span>CommandBuffer<span style="color:#f92672">&gt;</span> CmdBuffers <span style="color:#f92672">=</span> Device.allocateCommandBuffers(CommandBufferAllocInfo);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>CommandBuffer CmdBuffer <span style="color:#f92672">=</span> CmdBuffers.front();
+</span></span></code></pre></div><h3 id="recording-commands">Recording Commands</h3>
 <p>We can now record commands in the <code>vk::CommandBuffer</code> object. To run the compute shader
 we need to bind the pipeline, descriptor sets and record a <code>vk::CommandBuffer::dispatch</code> call:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>CommandBufferBeginInfo CmdBufferBeginInfo(vk<span style="color:#f92672">::</span>CommandBufferUsageFlagBits<span style="color:#f92672">::</span>eOneTimeSubmit);
-CmdBuffer.begin(CmdBufferBeginInfo);
-CmdBuffer.bindPipeline(vk<span style="color:#f92672">::</span>PipelineBindPoint<span style="color:#f92672">::</span>eCompute, ComputePipeline);
-CmdBuffer.bindDescriptorSets(vk<span style="color:#f92672">::</span>PipelineBindPoint<span style="color:#f92672">::</span>eCompute,    <span style="color:#75715e">// Bind point
-</span><span style="color:#75715e"></span>                                PipelineLayout,                  <span style="color:#75715e">// Pipeline Layout
-</span><span style="color:#75715e"></span>                                <span style="color:#ae81ff">0</span>,                               <span style="color:#75715e">// First descriptor set
-</span><span style="color:#75715e"></span>                                { DescriptorSet },               <span style="color:#75715e">// List of descriptor sets
-</span><span style="color:#75715e"></span>                                {});                             <span style="color:#75715e">// Dynamic offsets
-</span><span style="color:#75715e"></span>CmdBuffer.dispatch(NumElements, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>);
-CmdBuffer.end();
-</code></pre></div><p>The <code>vk::CommandBuffer::dispatch</code> function takes the number of threads to launch in the device.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>CommandBufferBeginInfo CmdBufferBeginInfo(vk<span style="color:#f92672">::</span>CommandBufferUsageFlagBits<span style="color:#f92672">::</span>eOneTimeSubmit);
+</span></span><span style="display:flex;"><span>CmdBuffer.begin(CmdBufferBeginInfo);
+</span></span><span style="display:flex;"><span>CmdBuffer.bindPipeline(vk<span style="color:#f92672">::</span>PipelineBindPoint<span style="color:#f92672">::</span>eCompute, ComputePipeline);
+</span></span><span style="display:flex;"><span>CmdBuffer.bindDescriptorSets(vk<span style="color:#f92672">::</span>PipelineBindPoint<span style="color:#f92672">::</span>eCompute,    <span style="color:#75715e">// Bind point
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                PipelineLayout,                  <span style="color:#75715e">// Pipeline Layout
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                <span style="color:#ae81ff">0</span>,                               <span style="color:#75715e">// First descriptor set
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                { DescriptorSet },               <span style="color:#75715e">// List of descriptor sets
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                {});                             <span style="color:#75715e">// Dynamic offsets
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>CmdBuffer.dispatch(NumElements, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>CmdBuffer.end();
+</span></span></code></pre></div><p>The <code>vk::CommandBuffer::dispatch</code> function takes the number of threads to launch in the device.
 In this example we are launching one thread for element.</p>
 <p>With the <code>vk::CommmandBuffer</code> recorded we can <em>finaly</em> submit the work the GPU. We first
 get the <code>vk::Queue</code> from the <code>vk::Device</code> using the queue family index retrieved earlier
 and we create a <code>vk::Fence</code>. The fence is a mechanism we can use to wait for the compute
 shader to complete. After waiting we can read the results of our computation:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>Queue Queue <span style="color:#f92672">=</span> Device.getQueue(ComputeQueueFamilyIndex, <span style="color:#ae81ff">0</span>);
-vk<span style="color:#f92672">::</span>Fence Fence <span style="color:#f92672">=</span> Device.createFence(vk<span style="color:#f92672">::</span>FenceCreateInfo());
-
-vk<span style="color:#f92672">::</span>SubmitInfo SubmitInfo(<span style="color:#ae81ff">0</span>,                <span style="color:#75715e">// Num Wait Semaphores
-</span><span style="color:#75715e"></span>                            <span style="color:#66d9ef">nullptr</span>,        <span style="color:#75715e">// Wait Semaphores
-</span><span style="color:#75715e"></span>                            <span style="color:#66d9ef">nullptr</span>,        <span style="color:#75715e">// Pipeline Stage Flags
-</span><span style="color:#75715e"></span>                            <span style="color:#ae81ff">1</span>,              <span style="color:#75715e">// Num Command Buffers
-</span><span style="color:#75715e"></span>                            <span style="color:#f92672">&amp;</span>CmdBuffer);    <span style="color:#75715e">// List of command buffers
-</span><span style="color:#75715e"></span>Queue.submit({ SubmitInfo }, Fence);
-Device.waitForFences({ Fence },             <span style="color:#75715e">// List of fences
-</span><span style="color:#75715e"></span>                        true,               <span style="color:#75715e">// Wait All
-</span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">uint64_t</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>));      <span style="color:#75715e">// Timeout
-</span></code></pre></div><p>The final step is to map the output buffer and read the results. For this example we are
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>Queue Queue <span style="color:#f92672">=</span> Device.getQueue(ComputeQueueFamilyIndex, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>Fence Fence <span style="color:#f92672">=</span> Device.createFence(vk<span style="color:#f92672">::</span>FenceCreateInfo());
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>SubmitInfo SubmitInfo(<span style="color:#ae81ff">0</span>,                <span style="color:#75715e">// Num Wait Semaphores
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                            <span style="color:#66d9ef">nullptr</span>,        <span style="color:#75715e">// Wait Semaphores
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                            <span style="color:#66d9ef">nullptr</span>,        <span style="color:#75715e">// Pipeline Stage Flags
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                            <span style="color:#ae81ff">1</span>,              <span style="color:#75715e">// Num Command Buffers
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                            <span style="color:#f92672">&amp;</span>CmdBuffer);    <span style="color:#75715e">// List of command buffers
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>Queue.submit({ SubmitInfo }, Fence);
+</span></span><span style="display:flex;"><span>Device.waitForFences({ Fence },             <span style="color:#75715e">// List of fences
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                        true,               <span style="color:#75715e">// Wait All
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                        <span style="color:#66d9ef">uint64_t</span>(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>));      <span style="color:#75715e">// Timeout
+</span></span></span></code></pre></div><p>The final step is to map the output buffer and read the results. For this example we are
 just going to print the values in the terminal:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">InBufferPtr <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int32_t</span><span style="color:#f92672">*&gt;</span>(Device.mapMemory(InBufferMemory, <span style="color:#ae81ff">0</span>, BufferSize));
-<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">uint32_t</span> I <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; I <span style="color:#f92672">&lt;</span> NumElements; <span style="color:#f92672">++</span>I)
-{
-    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> InBufferPtr[I] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>;
-}
-std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-Device.unmapMemory(InBufferMemory);
-
-<span style="color:#66d9ef">int32_t</span><span style="color:#f92672">*</span> OutBufferPtr <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int32_t</span><span style="color:#f92672">*&gt;</span>(Device.mapMemory(OutBufferMemory, <span style="color:#ae81ff">0</span>, BufferSize));
-<span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">uint32_t</span> I <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; I <span style="color:#f92672">&lt;</span> NumElements; <span style="color:#f92672">++</span>I)
-{
-    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> OutBufferPtr[I] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>;
-}
-std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
-Device.unmapMemory(OutBufferMemory);
-</code></pre></div><h2 id="cleaning">Cleaning</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>InBufferPtr <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int32_t</span><span style="color:#f92672">*&gt;</span>(Device.mapMemory(InBufferMemory, <span style="color:#ae81ff">0</span>, BufferSize));
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">uint32_t</span> I <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; I <span style="color:#f92672">&lt;</span> NumElements; <span style="color:#f92672">++</span>I)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> InBufferPtr[I] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>Device.unmapMemory(InBufferMemory);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">int32_t</span><span style="color:#f92672">*</span> OutBufferPtr <span style="color:#f92672">=</span> <span style="color:#66d9ef">static_cast</span><span style="color:#f92672">&lt;</span><span style="color:#66d9ef">int32_t</span><span style="color:#f92672">*&gt;</span>(Device.mapMemory(OutBufferMemory, <span style="color:#ae81ff">0</span>, BufferSize));
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> (<span style="color:#66d9ef">uint32_t</span> I <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>; I <span style="color:#f92672">&lt;</span> NumElements; <span style="color:#f92672">++</span>I)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>    std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> OutBufferPtr[I] <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34; &#34;</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
+</span></span><span style="display:flex;"><span>Device.unmapMemory(OutBufferMemory);
+</span></span></code></pre></div><h2 id="cleaning">Cleaning</h2>
 <p>We need to manually delete the resources used by our program or the validation layer will
 shout at you:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">Device.resetCommandPool(CommandPool, vk<span style="color:#f92672">::</span>CommandPoolResetFlags());
-Device.destroyFence(Fence);
-Device.destroyDescriptorSetLayout(DescriptorSetLayout);
-Device.destroyPipelineLayout(PipelineLayout);
-Device.destroyPipelineCache(PipelineCache);
-Device.destroyShaderModule(ShaderModule);
-Device.destroyPipeline(ComputePipeline);
-Device.destroyDescriptorPool(DescriptorPool);
-Device.destroyCommandPool(CommandPool);
-Device.freeMemory(InBufferMemory);
-Device.freeMemory(OutBufferMemory);
-Device.destroyBuffer(InBuffer);
-Device.destroyBuffer(OutBuffer);
-Device.destroy();
-Instance.destroy();
-</code></pre></div><p>The Vulkan C++ Header also has a <code>raii</code> set of objects that can be used to avoid manually
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>Device.resetCommandPool(CommandPool, vk<span style="color:#f92672">::</span>CommandPoolResetFlags());
+</span></span><span style="display:flex;"><span>Device.destroyFence(Fence);
+</span></span><span style="display:flex;"><span>Device.destroyDescriptorSetLayout(DescriptorSetLayout);
+</span></span><span style="display:flex;"><span>Device.destroyPipelineLayout(PipelineLayout);
+</span></span><span style="display:flex;"><span>Device.destroyPipelineCache(PipelineCache);
+</span></span><span style="display:flex;"><span>Device.destroyShaderModule(ShaderModule);
+</span></span><span style="display:flex;"><span>Device.destroyPipeline(ComputePipeline);
+</span></span><span style="display:flex;"><span>Device.destroyDescriptorPool(DescriptorPool);
+</span></span><span style="display:flex;"><span>Device.destroyCommandPool(CommandPool);
+</span></span><span style="display:flex;"><span>Device.freeMemory(InBufferMemory);
+</span></span><span style="display:flex;"><span>Device.freeMemory(OutBufferMemory);
+</span></span><span style="display:flex;"><span>Device.destroyBuffer(InBuffer);
+</span></span><span style="display:flex;"><span>Device.destroyBuffer(OutBuffer);
+</span></span><span style="display:flex;"><span>Device.destroy();
+</span></span><span style="display:flex;"><span>Instance.destroy();
+</span></span></code></pre></div><p>The Vulkan C++ Header also has a <code>raii</code> set of objects that can be used to avoid manually
 cleaning resources, for example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-c++" data-lang="c++">vk<span style="color:#f92672">::</span>raii<span style="color:#f92672">::</span>Context  context;
-vk<span style="color:#f92672">::</span>raii<span style="color:#f92672">::</span>Instance instance <span style="color:#f92672">=</span> vk<span style="color:#f92672">::</span>raii<span style="color:#f92672">::</span>su<span style="color:#f92672">::</span>makeInstance( context, AppName, EngineName );
-<span style="color:#75715e">// enumerate the physicalDevices
-</span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>raii<span style="color:#f92672">::</span>PhysicalDevices physicalDevices( instance );
-</code></pre></div><p>So this objects will clean their resources upon destruction.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>raii<span style="color:#f92672">::</span>Context  context;
+</span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>raii<span style="color:#f92672">::</span>Instance instance <span style="color:#f92672">=</span> vk<span style="color:#f92672">::</span>raii<span style="color:#f92672">::</span>su<span style="color:#f92672">::</span>makeInstance( context, AppName, EngineName );
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// enumerate the physicalDevices
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>raii<span style="color:#f92672">::</span>PhysicalDevices physicalDevices( instance );
+</span></span></code></pre></div><p>So this objects will clean their resources upon destruction.</p>
 <h2 id="conclusion">Conclusion</h2>
 <p>If you are here, well done, you can now use Vulkan to square a few numbers on the GPU =).
 Hopefully this will be useful to you in staring with Vulkan to run compute workloads on
