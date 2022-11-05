@@ -117,7 +117,7 @@ Vulkan provides both a graphics and compute APIs and in this post I will focus o
     <div class="post-item post-meta">
         <span><i class="iconfont icon-today-sharp"></i>&nbsp;2021-07-07</span>
 
-<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2483 words</span>
+<span><i class="iconfont icon-file-tray-sharp"></i>&nbsp;2482 words</span>
 <span><i class="iconfont icon-time-sharp"></i>&nbsp;12 minutes</span>
 <span><i class="iconfont icon-pricetags-sharp"></i>&nbsp;<a href="/tags/vulkan">vulkan</a>&nbsp;<a href="/tags/vulkan-compute">vulkan-compute</a>&nbsp;<a href="/tags/gpgpu">GPGPU</a>&nbsp;</span>
 
@@ -203,8 +203,8 @@ the project.</p>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> std<span style="color:#f92672">::</span>vector<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span><span style="color:#f92672">*&gt;</span> Layers <span style="color:#f92672">=</span> { <span style="color:#e6db74">&#34;VK_LAYER_KHRONOS_validation&#34;</span> };
 </span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>InstanceCreateInfo InstanceCreateInfo(vk<span style="color:#f92672">::</span>InstanceCreateFlags(), <span style="color:#75715e">// Flags
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                          <span style="color:#f92672">&amp;</span>AppInfo,                  <span style="color:#75715e">// Application Info
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                          Layers.size(),             <span style="color:#75715e">// Layers count
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                          Layers.data());            <span style="color:#75715e">// Layers
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                          Layers,                    <span style="color:#75715e">// Layers
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>                                          {});                       <span style="color:#75715e">// Extensions
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>vk<span style="color:#f92672">::</span>Instance Instance <span style="color:#f92672">=</span> vk<span style="color:#f92672">::</span>createInstance(InstanceCreateInfo);
 </span></span></code></pre></div><p>Here I&rsquo;m enabling the <code>VK_LAYER_KHRONOS_validation</code> layer so we can have some help from
 Vulkan in case something goes wrong.</p>
@@ -212,7 +212,7 @@ Vulkan in case something goes wrong.</p>
 <p>A <code>vk::PhysicalDevice</code> represents, as the name suggests, the physical piece of hardware
 that we can use to run our application. We need to select a physical device from which
 we can create a logical device, <code>vk::Device</code> that we use to interact with it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c++" data-lang="c++"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>PhysicalDevice PhysicalDevice <span style="color:#f92672">=</span> Instance.enumeratePhysicalDevices().front();
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-cpp" data-lang="cpp"><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>PhysicalDevice PhysicalDevice <span style="color:#f92672">=</span> Instance.enumeratePhysicalDevices().front();
 </span></span><span style="display:flex;"><span>vk<span style="color:#f92672">::</span>PhysicalDeviceProperties DeviceProps <span style="color:#f92672">=</span> PhysicalDevice.getProperties();
 </span></span><span style="display:flex;"><span>std<span style="color:#f92672">::</span>cout <span style="color:#f92672">&lt;&lt;</span> <span style="color:#e6db74">&#34;Device Name    : &#34;</span> <span style="color:#f92672">&lt;&lt;</span> DeviceProps.deviceName <span style="color:#f92672">&lt;&lt;</span> std<span style="color:#f92672">::</span>endl;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#66d9ef">uint32_t</span> ApiVersion <span style="color:#f92672">=</span> DeviceProps.apiVersion;
